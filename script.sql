@@ -1,5 +1,4 @@
-select * from goodCombination;
-commit;
+
 CREATE TABLE `productInfo` (
 	`seq`	INT	AUTO_INCREMENT PRIMARY KEY,
 	`productImage`	VARCHAR(1000)	NULL,
@@ -71,7 +70,6 @@ CREATE TABLE `productMedication` (
     FOREIGN KEY (productInfo_seq) REFERENCES productInfo(seq)
 );
 
-
 CREATE TABLE `medicationRecord` (
 	`seq`	INT	AUTO_INCREMENT PRIMARY KEY,
 	`medicationList_seq`	INT	NOT NULL,
@@ -82,7 +80,6 @@ CREATE TABLE `medicationRecord` (
     FOREIGN KEY (medicationList_seq) REFERENCES productMedication(seq)
 );
 
------------------------------------
 CREATE TABLE `admin` (
 	`seq`	INT	AUTO_INCREMENT PRIMARY KEY,
 	`id`	VARCHAR(50)	NOT NULL,
@@ -91,7 +88,6 @@ CREATE TABLE `admin` (
 	`birthDate`	TIMESTAMP	NOT NULL,
 	`email`	VARCHAR(100)	NOT NULL
 );
-
 
 CREATE TABLE `noticePost` (
 	`seq`	INT	AUTO_INCREMENT PRIMARY KEY,
@@ -137,7 +133,6 @@ CREATE TABLE `health` (
 	`health`	VARCHAR(150)	NOT NULL
 );
 
------------------------------------------
 CREATE TABLE `sessionType` (
 	`seq`	INT	AUTO_INCREMENT PRIMARY KEY,
 	`name`	VARCHAR(30)	NOT NULL
@@ -147,6 +142,7 @@ CREATE TABLE `sessionStatus` (
 	`seq`	INT	AUTO_INCREMENT PRIMARY KEY,
 	`name`	VARCHAR(50)	NOT NULL
 );
+
 CREATE TABLE `logSession` (
 	`seq`	INT	AUTO_INCREMENT PRIMARY KEY,
 	`member_seq`	INT	NOT NULL,
@@ -174,7 +170,7 @@ CREATE TABLE `ingredient` (
 	`name`	VARCHAR(500)	NOT NULL,
 	`category`	INT	NOT NULL
 );
----------------------------------------
+
 CREATE TABLE `ingredientContent` (
 	`seq`	INT	AUTO_INCREMENT PRIMARY KEY,
 	`functionalContent`	VARCHAR(1000)	NULL,
@@ -220,7 +216,6 @@ CREATE TABLE `emailVerification` (
     FOREIGN KEY (member_seq) REFERENCES member(seq)
 );
 
---------------------------------------
 CREATE TABLE `activityType` (
 	`seq`	INT	AUTO_INCREMENT PRIMARY KEY,
 	`name`	VARCHAR(30)	NOT NULL,
@@ -239,13 +234,11 @@ CREATE TABLE `userActivity` (
     FOREIGN KEY (type_seq) REFERENCES activityType(seq)
 );
 
------------------------------------
 CREATE TABLE `logLevel` (
 	`seq`	INT	AUTO_INCREMENT PRIMARY KEY,
 	`name`	VARCHAR(30)	NOT NULL,
 	`message`	VARCHAR(300)	NOT NULL
 );
-
 
 CREATE TABLE `logApplication` (
 	`seq`	INT	AUTO_INCREMENT PRIMARY KEY,
@@ -255,7 +248,6 @@ CREATE TABLE `logApplication` (
 	`source`	VARCHAR(100)	NOT NULL,
     FOREIGN KEY (level_seq) REFERENCES logLevel(seq)
 );
-
 
 CREATE TABLE `logError` (
 	`seq`	INT	AUTO_INCREMENT PRIMARY KEY,
@@ -275,13 +267,11 @@ CREATE TABLE `healthIngredient` (
     FOREIGN KEY (ingredient_seq) REFERENCES ingredient(seq)
 );
 
-
 CREATE TABLE `adminAuth` (
 	`seq`	INT	AUTO_INCREMENT PRIMARY KEY,
 	`role`	VARCHAR(50)	NOT NULL
 );
 
-------여기서부터 시작 > adminAuthList
 CREATE TABLE `adminAuthList` (
 	`Key`	INT	AUTO_INCREMENT PRIMARY KEY,
 	`admin_seq`	INT	NOT NULL,
@@ -289,8 +279,6 @@ CREATE TABLE `adminAuthList` (
     FOREIGN KEY (admin_seq) REFERENCES admin(seq),
     FOREIGN KEY (adminAuth_seq) REFERENCES adminAuth(seq)
 );
-
-
 
 CREATE TABLE `address` (
 	`seq`	INT	AUTO_INCREMENT PRIMARY KEY,

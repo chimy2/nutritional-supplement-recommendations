@@ -1,8 +1,8 @@
 package com.test.admin.board;
 
-import lombok.Getter;
+import lombok.Data;
 
-@Getter
+@Data
 public abstract class BoardDTO<T extends Board> {
 
 	private Long seq;

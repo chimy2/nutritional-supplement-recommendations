@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import lombok.RequiredArgsConstructor;
 
@@ -15,7 +16,7 @@ public class BoardServiceImpl<T extends Board, D extends BoardDTO> implements Bo
 
 	@Override
 	public Page<D> getList(int page, int size) {
-		Pageable pageable = PageRequest.of(page -1, size);
+		Pageable pageable = PageRequest.of(page - 1, size, Sort.by(Sort.Direction.DESC, "seq"));
 		Page<T> entityPage = repository.findAll(pageable);
         return entityPage.map(entity -> (D) entity.toDTO()); 
 	}
