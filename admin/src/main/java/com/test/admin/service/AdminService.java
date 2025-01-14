@@ -15,12 +15,12 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AdminService implements UserDetailsService {
 	
-	private final AdminRepository adminRepository;
+	private final AdminRepository repository;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		
-		Admin admin = adminRepository.findById(username);
+		Admin admin = repository.findById(username);
 
 		System.out.println(admin);
 		

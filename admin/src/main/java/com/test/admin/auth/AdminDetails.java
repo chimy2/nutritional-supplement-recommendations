@@ -46,5 +46,10 @@ public class AdminDetails implements UserDetails {
 	public String getUsername() {
 		return this.admin.getId();
 	}
-
+	
+	
+	public Long getSeq() {
+		return this.admin.getSeq();
+	}
+	
 }

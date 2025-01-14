@@ -33,7 +33,7 @@ public class NoticeDTO extends BoardDTO {
 				.title(this.title)
 				.content(this.content)
 				.regDate(this.regDate)
-				.adminSeq(adminSeq)
+				.adminSeq(this.adminSeq)
 				.build();
 	}
 	

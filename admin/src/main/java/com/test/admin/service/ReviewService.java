@@ -14,21 +14,21 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ReviewService {
 	
-	private final ReviewRepository reviewRepository;
+	private final ReviewRepository repository;
 	
-	private final ReviewQueryRepository reviewQueryDSLRepository;
+	private final ReviewQueryRepository queryRepository;
 
 	public int getCount() {
-		return (int) reviewRepository.count();
+		return (int) repository.count();
 	}
 
 	public List<ReviewDTO> getReviewList(int offset, int limit) {
-		return reviewQueryDSLRepository.findAllPagenation(offset, limit)
+		return queryRepository.findAllPagenation(offset, limit)
 				.stream().map(review -> review.toDTO()).toList();
 	}
 
 	public ReviewDTO get(Long seq) {
-		return reviewRepository.findById(seq).get().toDTO();
+		return repository.findById(seq).get().toDTO();
 	}
 
 }

@@ -1,5 +1,7 @@
 package com.test.admin.service;
 
+import java.time.LocalDateTime;
+
 import org.springframework.stereotype.Service;
 
 import com.test.admin.board.BoardServiceImpl;
@@ -19,9 +21,17 @@ public class NoticeService extends BoardServiceImpl<Notice, NoticeDTO> {
 		this.repository = repository;
 		this.queryRepository = queryRepository;
 	}
-
+	
 	public long count() {
 		return repository.count();
+	}
+	
+	@Override
+	public NoticeDTO create(NoticeDTO dto) {
+		
+		dto.setRegDate(LocalDateTime.now());
+		
+		return super.create(dto);
 	}
 	
 }
