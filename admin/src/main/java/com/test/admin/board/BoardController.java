@@ -34,9 +34,11 @@ public abstract class BoardController<D extends BoardDTO> {
 	
 //	상세
 	@GetMapping("/{seq}")
-	public String getDetail(Model model, @PathVariable Long seq) {
+	public String getDetail(Model model, @PathVariable("seq") Long seq) {
+
+		D board = service.get(seq).orElseThrow(() -> new IllegalArgumentException("존재하지 않습니다."));
 		
-		model.addAttribute("board", service.get(seq));
+		model.addAttribute("board", board);
 		
 		return PathHelper.getDetailPath(PATH);
 	}
@@ -49,7 +51,7 @@ public abstract class BoardController<D extends BoardDTO> {
 	
 //	수정 화면
 	@GetMapping("/{seq}/edit")
-	public String getEditView(Model model, @PathVariable Long seq) {
+	public String getEditView(Model model, @PathVariable("seq") Long seq) {
 		
 		model.addAttribute("board", service.get(seq));
 		
@@ -68,7 +70,7 @@ public abstract class BoardController<D extends BoardDTO> {
 	
 //	수정하기
 	@PutMapping("/{seq}")
-	public String put(Model model, @PathVariable Long seq, @ModelAttribute D dto) {
+	public String put(Model model, @PathVariable("seq") Long seq, @ModelAttribute D dto) {
 		
 		dto.setSeq(seq);
 		
@@ -80,7 +82,7 @@ public abstract class BoardController<D extends BoardDTO> {
 	
 //	삭제하기
 	@DeleteMapping("/{seq}")
-	public String delete(Model model, @PathVariable Long seq) {
+	public String delete(Model model, @PathVariable("seq") Long seq) {
 		service.delete(seq);
 		return PathHelper.redirectListPath(PATH);
 	}
