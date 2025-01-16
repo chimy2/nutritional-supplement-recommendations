@@ -52,8 +52,10 @@ public abstract class BoardController<D extends BoardDTO> {
 //	수정 화면
 	@GetMapping("/{seq}/edit")
 	public String getEditView(Model model, @PathVariable("seq") Long seq) {
+
+		D board = service.get(seq).orElseThrow(() -> new IllegalArgumentException("존재하지 않습니다."));
 		
-		model.addAttribute("board", service.get(seq));
+		model.addAttribute("board", board);
 		
 		return PathHelper.getEditPath(PATH);
 	}

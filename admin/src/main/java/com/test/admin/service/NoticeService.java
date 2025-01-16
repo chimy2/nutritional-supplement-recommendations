@@ -2,8 +2,11 @@ package com.test.admin.service;
 
 import java.time.LocalDateTime;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import com.test.admin.auth.AdminDetails;
 import com.test.admin.board.BoardServiceImpl;
 import com.test.admin.dao.NoticeQueryRepository;
 import com.test.admin.dto.NoticeDTO;
@@ -32,6 +35,14 @@ public class NoticeService extends BoardServiceImpl<Notice, NoticeDTO> {
 		dto.setRegDate(LocalDateTime.now());
 		
 		return super.create(dto);
+	}
+	
+	public Long getCurrentAdminSeq() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+		AdminDetails admin = (AdminDetails) authentication.getPrincipal();
+		
+	    return admin.getSeq();
 	}
 	
 }
