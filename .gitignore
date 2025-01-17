@@ -39,3 +39,6 @@ Thumbs.db
 *.war
 
 demo/HELP.md
+
+# vs code
+.vscode
