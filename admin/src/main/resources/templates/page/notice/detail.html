@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	th:inline="javascript">
 <head>
 <meta charset="UTF-8">
 <title>[[#{title}]]</title>
@@ -19,8 +20,9 @@
 							<p class="pre-line">[[*{content}]]</p>
 						</div>
 						<div class="d-flex justify-content-end mt-2">
-							<a class="btn btn-primary" th:href="@{/notice/{seq}/edit(seq=${board.seq})}">[(#{button.notice.edit})]</a>
-							<a class="btn btn-primary ms-2" th:href="@{/}">[(#{button.notice.delete})]</a>
+							<button class="btn btn-primary" onclick="returnPage()">[(#{button.return})]</button>
+							<a class="btn btn-primary ms-2" th:href="@{/notice/{seq}/edit(seq=${board.seq})}">[(#{button.notice.edit})]</a>
+							<button class="btn btn-primary ms-2" th:onclick="|openDeleteModal(${board.seq})|">[(#{button.notice.delete})]</button>
 						</div>
 					</th:block>
 				</div>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Modal</title>
+    </head>
+    <body>
+        <div class="modal-container d-none">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title"></h3>
+                </div>
+                <div class="modal-body"><p class="modal-text"></p></div>
+                <div class="modal-footer">
+                    <form method="post">
+                        <input type="hidden" name="_method" value="delete" />
+                        <input type="hidden" name="seq" />
+                        <button class="btn btn-success m-2">
+                            [[#{button.ok}]]
+                        </button>
+                        <button
+                            type="button"
+                            class="btn btn-danger m-2 btn-modal-close">
+                            [[#{button.cancel}]]
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
