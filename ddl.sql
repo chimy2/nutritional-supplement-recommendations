@@ -1,4 +1,47 @@
 
+
+DROP TABLE ingredientDaily;
+DROP TABLE ingredientHealth;
+DROP TABLE ingredientOrgan;
+DROP TABLE ingredientGenderAge;
+DROP TABLE surveyDaily;
+DROP TABLE surveyOrgan;
+DROP TABLE surveyHealth;
+DROP TABLE surveyGenderAge;
+DROP TABLE memberAddress;
+DROP TABLE address;
+DROP TABLE adminAuthList;
+DROP TABLE adminAuth;
+DROP TABLE healthIngredient;
+DROP TABLE logError;
+DROP TABLE logApplication;
+DROP TABLE logLevel;
+DROP TABLE userActivity;
+DROP TABLE activityType;
+DROP TABLE emailVerification;
+DROP TABLE badCombination;
+DROP TABLE goodCombination;
+DROP TABLE ingredientProduct;
+DROP TABLE ingredientContent;
+DROP TABLE ingredient;
+DROP TABLE news;
+DROP TABLE logSession;
+DROP TABLE sessionStatus;
+DROP TABLE sessionType;
+DROP TABLE health;
+DROP TABLE communityComment;
+DROP TABLE communityPost;
+DROP TABLE faqPost;
+DROP TABLE noticePost;
+DROP TABLE admin;
+DROP TABLE medicationRecord;
+DROP TABLE productMedication;
+DROP TABLE reviewImage;
+DROP TABLE reviewComment;
+DROP TABLE review;
+DROP TABLE member;
+DROP TABLE productInfo;
+
 CREATE TABLE `productInfo` (
 	`seq`	INT	AUTO_INCREMENT PRIMARY KEY,
 	`productImage`	VARCHAR(1000)	NULL,
@@ -351,5 +394,100 @@ CREATE TABLE `ingredientDaily` (
     FOREIGN KEY (daily_seq) REFERENCES surveyDaily(seq),
     FOREIGN KEY (ingredient_seq) REFERENCES ingredient(seq)
 );
+
+
+DROP VIEW vwGoodCombination;
+
+CREATE or replace VIEW vwGoodCombination AS
+SELECT g.seq, 
+       g.ingredient_seq, 
+       i.name AS ingredientName, 
+       g.good, 
+       i2.name AS name, 
+       g.reason, 
+       g.link,
+       c.functionalContent
+FROM goodCombination g 
+LEFT JOIN ingredient i ON g.ingredient_seq = i.seq
+LEFT JOIN ingredient i2 ON g.good = i2.seq
+LEFT JOIN ingredientContent c ON g.ingredient_seq = c.ingredient_seq;
+
+DROP VIEW vwBadCombination;
+
+CREATE VIEW vwBadCombination AS
+SELECT g.seq, 
+       g.ingredient_seq, 
+       i.name AS ingredientName, 
+       g.bad, 
+       i2.name AS name, 
+       g.reason, 
+       g.link,
+       c.functionalContent
+FROM badCombination g 
+LEFT JOIN ingredient i ON g.ingredient_seq = i.seq
+LEFT JOIN ingredient i2 ON g.bad = i2.seq
+LEFT JOIN ingredientContent c ON g.ingredient_seq = c.ingredient_seq;
+
+-- 성별 나이대별 영양제 성분 및 내용 뷰
+drop view vwGenderAgeRecommend;
+
+CREATE OR REPLACE VIEW vwGenderAgeRecommend AS
+SELECT 
+    iga.seq,
+    ga.gender as gender,
+    ga.age as age,
+    iga.genderAge_seq as genderAgeSeq,
+    iga.ingredient_seq as ingredientSeq,
+    i.name as ingredientName,
+    ic.functionalContent
+FROM surveyGenderAge ga
+INNER JOIN ingredientGenderAge iga ON ga.seq = iga.genderAge_seq
+INNER JOIN ingredient i ON iga.ingredient_seq = i.seq
+INNER JOIN ingredientContent ic ON i.seq = ic.ingredient_seq;
+
+-- 건강검진 영양제 성분 및 내용 뷰
+drop view vwHealthRecommend;
+
+CREATE VIEW vwHealthRecommend AS
+SELECT ih.seq, 
+       h.name,
+       ih.health_seq as healthSeq,
+       ih.ingredient_seq as ingredientSeq,
+       i.name as ingredientName,
+       ic.functionalContent
+FROM surveyHealth h
+INNER JOIN ingredientHealth ih ON h.seq = ih.health_seq
+INNER JOIN ingredient i ON ih.ingredient_seq = i.seq
+INNER JOIN ingredientContent ic ON i.seq = ic.ingredient_seq;
+
+-- 주요 장기 영양제 성분 및 내용 뷰
+drop view vwOrganRecommend;
+
+CREATE VIEW vwOrganRecommend AS
+SELECT io.seq, 
+       o.name,
+       io.organ_seq as organSeq,
+       io.ingredient_seq as ingredientSeq,
+       i.name as ingredientName,
+       ic.functionalContent
+FROM surveyOrgan o
+INNER JOIN ingredientOrgan io ON o.seq = io.organ_seq
+INNER JOIN ingredient i ON io.ingredient_seq = i.seq
+INNER JOIN ingredientContent ic ON i.seq = ic.ingredient_seq;
+
+-- 일상생활 영양제 성분 및 내용 뷰
+drop view vwDailyRecommend;
+
+CREATE VIEW vwDailyRecommend AS
+SELECT id.seq, 
+       d.name,
+       id.daily_seq as dailySeq,
+       id.ingredient_seq as ingredientSeq,
+       i.name as ingredientName,
+       ic.functionalContent
+FROM surveyDaily d
+INNER JOIN ingredientDaily id ON d.seq = id.daily_seq
+INNER JOIN ingredient i ON id.ingredient_seq = i.seq
+INNER JOIN ingredientContent ic ON i.seq = ic.ingredient_seq;
 
 commit;

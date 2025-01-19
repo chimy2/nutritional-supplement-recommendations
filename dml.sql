@@ -1,3 +1,5 @@
+
+
 -- 최재권
 
 -- health 데이터 삽입
@@ -128,39 +130,7 @@ select * from badCombination;
 
 commit;
 
-CREATE or replace VIEW vwGoodCombination AS
-SELECT g.seq, 
-       g.ingredient_seq, 
-       i.name AS ingredientName, 
-       g.good, 
-       i2.name AS name, 
-       g.reason, 
-       g.link,
-       c.functionalContent
-FROM goodCombination g 
-LEFT JOIN ingredient i ON g.ingredient_seq = i.seq
-LEFT JOIN ingredient i2 ON g.good = i2.seq
-LEFT JOIN ingredientContent c ON g.ingredient_seq = c.ingredient_seq;
 
-
-
-CREATE VIEW vwBadCombination AS
-SELECT g.seq, 
-       g.ingredient_seq, 
-       i.name AS ingredientName, 
-       g.bad, 
-       i2.name AS name, 
-       g.reason, 
-       g.link,
-       c.functionalContent
-FROM badCombination g 
-LEFT JOIN ingredient i ON g.ingredient_seq = i.seq
-LEFT JOIN ingredient i2 ON g.bad = i2.seq
-LEFT JOIN ingredientContent c ON g.ingredient_seq = c.ingredient_seq;
-
-
-select * from vwGoodCombination;
-select * from vwBadCombination;
 ----------------------------------------
 -- 남황현
 insert into ingredientContent (seq,functionalContent,dailyIntake,precautionsForIngestion,ingredient_seq) VALUES(1,'가) 어두운 곳에서 시각 적응을 위해 필요<br/>(나) 피부와 점막을 형성하고 기능을 유지하는데 필요<br/>(다) 상피세포의 성장과 발달에 필요','210～1,000 μg RE(699.93∼3,333 IU)',' ',1);
@@ -191,12 +161,154 @@ insert into ingredientContent (seq,functionalContent,dailyIntake,precautionsForI
 
 select * from ingredientContent;
 
-commit;
+
+-- 성별/나이대별 insert
+INSERT INTO surveyGenderAge (gender, age) VALUES
+('f', 10),
+('f', 20),
+('f', 30),
+('f', 40),
+('f', 50),
+('f', 60),
+('m', 10),
+('m', 20),
+('m', 30),
+('m', 40),
+('m', 50),
+('m', 60);
+
+select * from surveyGenderAge;
+
+-- 성별/나이대별 + 성분 연관 테이블
+INSERT INTO ingredientGenderAge (genderAge_seq, ingredient_seq) VALUES
+(1,1),
+(1,12),
+(1,18),
+(2,4),
+(2,13),
+(2,18),
+(3,13),
+(3,18),
+(3,21),
+(4,11),
+(4,13),
+(4,18),
+(5,4),
+(5,10),
+(5,22),
+(6,11),
+(6,18),
+(6,22),
+(7,1),
+(7,12),
+(7,18),
+(8,2),
+(8,11),
+(8,21),
+(9,3),
+(9,11),
+(9,14),
+(10,4),
+(10,17),
+(10,26),
+(11,11),
+(11,13),
+(11,18),
+(12,11),
+(12,13),
+(12,18);
+
+select * from ingredientGenderAge;
+
+INSERT INTO surveyHealth (name) VALUES
+('간 건강'),
+('피로감'),
+('혈관 및 혈액 순환'),
+('콜레스테롤'),
+('혈당 관리'),
+('혈압 관리');
+
+select * from surveyHealth;
+
+INSERT INTO ingredientHealth (health_seq, ingredient_seq) VALUES
+(1,2),
+(1,15),
+(1,21),
+(2,10),
+(2,13),
+(2,16),
+(3,2),
+(3,11),
+(3,13),
+(3,3),
+(4,8),
+(4,11),
+(4,21),
+(5,3),
+(5,4),
+(5,13),
+(6,3),
+(6,11),
+(6,13);
+
+select * from ingredientHealth;
+
+INSERT INTO surveyOrgan (name) VALUES
+('눈 건강'),
+('뼈 건강'),
+('장 건강');
+
+select * from surveyOrgan;
+
+INSERT INTO ingredientOrgan (organ_seq, ingredient_seq) VALUES
+(1,1),
+(1,11),
+(1,17),
+(2,4),
+(2,13),
+(2,18),
+(3,19);
+
+select * from ingredientOrgan;
+
+INSERT INTO surveyDaily (name) VALUES
+('운동 능력 및 근육량'),
+('면역 기능'),
+('소화 및 위식도 건강'),
+('스트레스 및 수면'),
+('치아 및 잇몸'),
+('피부 건강');
+
+select * from surveyDaily;
+
+INSERT INTO ingredientDaily (daily_seq, ingredient_seq) VALUES
+(1,13),
+(1,15),
+(1,24),
+(2,3),
+(2,4),
+(2,12),
+(3,5),
+(3,19),
+(3,25),
+(4,5),
+(4,8),
+(4,11),
+(5,4),
+(5,12),
+(5,18),
+(6,2),
+(6,3),
+(6,23);
+
+select * from ingredientDaily;
+
 
 select * from member;
 INSERT INTO member (username,email,password,name,nickname, dob, gender, telephone, status) 
 VALUES ('hong', 'hong@test.com','1111','hong','hong','2000-01-01','m','01012345678',1);
 
 
-select * from vwDailyRecommend;
-select * from ingredientDaily;
+
+commit;
+
