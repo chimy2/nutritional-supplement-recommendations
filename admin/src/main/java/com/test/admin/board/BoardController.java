@@ -45,7 +45,7 @@ public abstract class BoardController<D extends BoardDTO> {
 	
 //	글쓰기 화면
 	@GetMapping("/write")
-	public String getWriteView() {
+	public String getWriteView(Model model) {
 		return PathHelper.getWritePath(PATH);
 	}
 	
@@ -63,8 +63,11 @@ public abstract class BoardController<D extends BoardDTO> {
 //	글쓰기
 	@PostMapping
 	public String post(Model model, @ModelAttribute D dto) {
-		
+
+		System.out.println(dto);
 		D result = service.create(dto);
+		
+		System.out.println(dto);
 
 		return PathHelper.redirectDetailPath(PATH, result.getSeq());
 	}

@@ -1,43 +1,32 @@
-package com.test.admin.entity;
+package com.test.admin.dto;
 
 import java.time.LocalDateTime;
 
-import com.test.admin.board.Board;
-import com.test.admin.dto.ProductInfoDTO;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.test.admin.board.BoardDTO;
+import com.test.admin.entity.ProductInfo;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
-@Entity
-@Getter
-@ToString
+@Data
 @Builder
-@Table(name = "productInfo")
-@AllArgsConstructor
 @NoArgsConstructor
-public class ProductInfo extends Board {
+@AllArgsConstructor
+public class ProductInfoDTO extends BoardDTO {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long seq;
 	
 	private String productImage;
 	
-	@Column(name = "CompanyName")
 	private String companyName;
 	private String productName;
 	
-	@Column(name = "ReportNo")
 	private String reportNo;
+
 	private LocalDateTime registrationDate;
 	private String expirationDate;
 	private String medicationType;
@@ -48,10 +37,10 @@ public class ProductInfo extends Board {
 	private String precautionsForIngestion;
 	private String functionalContent;
 	private String standardsAndSpecifications;
-	
+
 	@Override
-	public ProductInfoDTO toDTO() {
-		return ProductInfoDTO.builder()
+	public ProductInfo toEntity() {
+		return ProductInfo.builder()
 				.seq(this.seq)
 				.productImage(this.productImage)
 				.companyName(this.companyName)

@@ -3,12 +3,11 @@
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="UTF-8">
-<title>[[#{title}]]</title>
+<title>[[${board.title}]]</title>
 </head>
 <body>
 	<th:block th:replace="~{layout/base.html}">
 		<th:block th:fragment="content">
-
 
 			<!-- Content Start -->
 			<div class="container-fluid pt-4 px-4">

@@ -1,44 +1,62 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head>
-<meta charset="UTF-8">
-<title>[[#{title.notice.list}]]</title>
-</head>
-<body>
-	<th:block th:replace="~{layout/base.html}">
-		<th:block th:fragment="content">
-
-			<!-- Content Start -->
-			<div class="container-fluid pt-4 px-4">
-				<div class="bg-secondary rounded h-100 p-4">
-					<h6 class="mb-4">Notice</h6>
-					<table class="table">
-						<thead>
-							<tr>
-								<th scope="col">#</th>
-								<th scope="col">Title</th>
-								<th scope="col">Date</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr th:each="notice : ${list}" th:object="${notice}">
-								<th scope="row">[[*{seq}]]</th>
-								<td><a th:href="@{/notice/{seq}(seq=*{seq})}">[[*{title}]]</a></td>
-								<td>[[*{#temporals.format(regDate, 'yyyy.MM.dd')}]]</td>
-							</tr>
-						</tbody>
-					</table>
-					<div class="d-flex justify-content-between align-items-center">
-						<!-- 왼쪽 공백 (필요하면 추가 요소 넣기) -->
-						<div></div>
-						<a href="/notice" class="btn btn-primary m-2">[(#{button.nutri.write})]</a>
-					</div>
-				</div>
-			</div>
-			<!-- Content End -->
-			
-		</th:block>
-	</th:block>
-</body>
+<html
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <meta charset="UTF-8" />
+        <title>[[#{title.nutri.list}]]</title>
+    </head>
+    <body>
+        <th:block th:replace="~{layout/base.html}">
+            <th:block th:fragment="content">
+                <!-- Content Start -->
+                <div class="container-fluid pt-4 px-4">
+                    <div class="bg-secondary rounded h-100 p-4">
+                        <h6 class="mb-4">[[#{content.title.nutri.list}]]</h6>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Company</th>
+                                    <th scope="col">Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr
+                                    th:each="nutri : ${list}"
+                                    th:object="${nutri}">
+                                    <th scope="row">[[*{seq}]]</th>
+                                    <td>
+                                        <a
+                                            th:href="@{/nutri/{seq}(seq=*{seq})}">
+                                            [[*{productName}]]
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a th:href="@{/nutri?}">
+                                            [[*{companyName}]]
+                                        </a>
+                                    </td>
+                                    <td>
+                                        [[*{#temporals.format(registrationDate,
+                                        'yyyy.MM.dd')}]]
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div
+                            class="d-flex justify-content-between align-items-center">
+                            <!-- 왼쪽 공백 (필요하면 추가 요소 넣기) -->
+                            <div></div>
+                            <a href="/nutri/write" class="btn btn-primary m-2">
+                                [(#{button.nutri.write})]
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Content End -->
+            </th:block>
+        </th:block>
+    </body>
 </html>
