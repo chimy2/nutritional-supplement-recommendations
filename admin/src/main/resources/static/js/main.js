@@ -1,3 +1,4 @@
+/* modal */
 const modalContainer = $('.modal-container')[0];
 
 $(modalContainer).click((event) => {
@@ -54,3 +55,19 @@ function getBoardName() {
 function returnPage() {
     history.back();
 }
+
+
+$(document).ready(function() {
+    $('.select2-multiple').select2({
+		placeholder: 'Select Categories'
+	});
+	
+});
+
+$('.nutri-datetimepicker').datetimepicker({
+    format: 'MM/DD/YYYY hh:mm A',
+    icons: {
+        time: 'fa fa-clock', // 🕒 시간 선택 아이콘
+    }
+});
+

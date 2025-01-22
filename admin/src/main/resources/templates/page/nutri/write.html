@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<title>[[#{title.nutri.write}]]</title>
+
+</head>
+<body>
+	<th:block th:replace="~{layout/base.html}">
+		<th:block th:fragment="content">
+
+			<!-- Content Start -->
+			<div class="container-fluid pt-4 px-4">
+				<div class="bg-secondary rounded h-100 p-4">
+					<h6 class="mb-4">[[#{content.title.nutri.write}]]</h6>
+					<form method="post" action="/nutri">
+						<div class="d-flex flex-wrap gap-3 mb-3">
+							<!-- 제품명 -->
+							<div class="form-floating flex-grow-1 col-md-6">
+								<input type="text" class="form-control" id="floatingInput"
+									name="productName" placeholder="Product Name" required>
+								<label for="floatingInput">Product Name</label>
+							</div>
+
+							<!-- 신고 번호 -->
+							<div class="form-floating flex-grow-1">
+								<input type="text" class="form-control" id="floatingInput"
+									name="reportNo" placeholder="Report Number" required> <label
+									for="floatingInput">Report Number</label>
+							</div>
+						</div>
+
+						<!-- 업체명 -->
+						<div class="form-floating mb-3">
+							<input type="text" class="form-control" id="floatingInput"
+								name="companyName" placeholder="Company Name"> <label
+								for="floatingInput">Company Name</label>
+						</div>
+
+						<div class="d-flex flex-wrap gap-3 mb-3">
+							<!-- 등록 일자 -->
+							<div class="form-floating flex-grow-1">
+
+								<div
+									class=" form-floating input-group date nutri-datetimepicker"
+									id="floatingInput" data-target-input="nearest">
+									<input type="text" class="form-control datetimepicker-input"
+										id="floatingInput" name="registrationDate"
+										placeholder="Registration Date"
+										data-target=".nutri-datetimepicker" required><label
+										for="floatingInput">Registration Date</label>
+									<div class="input-group-append"
+										data-target=".nutri-datetimepicker"
+										data-toggle="datetimepicker">
+										<div class="input-group-text">
+											<i class="fa fa-calendar"></i>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- 소비기한 -->
+							<div class="form-floating flex-grow-1">
+								<input type="text" class="form-control" id="floatingInput"
+									name="expirationDate" placeholder="Expiration Date"> <label
+									for="floatingInput">Expiration Date</label>
+							</div>
+						</div>
+
+						<!-- 성상 -->
+						<div class="form-floating mb-3">
+							<textarea class="form-control" placeholder="Medication Type"
+								id="floatingTextarea" name="medicationType"
+								style="height: 100px;" maxlength="500"></textarea>
+							<label for="floatingTextarea">Medication Type</label>
+						</div>
+
+						<!-- 섭취량/섭취방법 -->
+						<div class="form-floating mb-3">
+							<textarea class="form-control" placeholder="Ingestion Method"
+								id="floatingTextarea" name="ingestionMethod"
+								style="height: 100px;" maxlength="500"></textarea>
+							<label for="floatingTextarea">Ingestion Method</label>
+						</div>
+
+						<!-- 포장 재질 -->
+						<div class="form-floating mb-3">
+							<textarea class="form-control" placeholder="Packaging Material"
+								id="floatingTextarea" name="packagingMaterial"
+								style="height: 100px;" maxlength="500"></textarea>
+							<label for="floatingTextarea">Packaging Material</label>
+						</div>
+
+						<!-- 포장 방법 -->
+						<div class="form-floating mb-3">
+							<textarea class="form-control" placeholder="Packaging Method"
+								id="floatingTextarea" name="packagingMethod"
+								style="height: 100px;" maxlength="500"></textarea>
+							<label for="floatingTextarea">Packaging Method</label>
+						</div>
+
+						<!-- 보존 및 유통기준 -->
+						<div class="form-floating mb-3">
+							<textarea class="form-control" placeholder="Preservation"
+								id="floatingTextarea" name="preservation" style="height: 100px;"
+								maxlength="500"></textarea>
+							<label for="floatingTextarea">Preservation</label>
+						</div>
+
+						<!-- 섭취 시 주의사항 -->
+						<div class="form-floating mb-3">
+							<textarea class="form-control"
+								placeholder="Precautions For Ingestion" id="floatingTextarea"
+								name="precautionsForIngestion" style="height: 150px;"
+								maxlength="1000"></textarea>
+							<label for="floatingTextarea">Precautions For Ingestion</label>
+						</div>
+
+						<!-- 기능성 내용 -->
+						<div class="form-floating mb-3">
+							<textarea class="form-control" placeholder="Functional Content"
+								id="floatingTextarea" name="functionalContent"
+								style="height: 200px;" maxlength="2000"></textarea>
+							<label for="floatingTextarea">Functional Content</label>
+						</div>
+
+						<!-- 기준 및 규격 -->
+						<div class="form-floating mb-3">
+							<textarea class="form-control"
+								placeholder="Standards And Specifications" id="floatingTextarea"
+								name="standardsAndSpecifications" style="height: 200px;"
+								maxlength="2000"></textarea>
+							<label for="floatingTextarea">Standards And
+								Specifications</label>
+						</div>
+
+						<!-- 제품 이미지 -->
+						<div class="form-floating mb-3">
+							<input type="url" class="form-control" id="floatingInput"
+								name="productImage" placeholder="Product Image Link"> <label
+								for="floatingInput">Product Image Link</label>
+						</div>
+
+						<div class="form-floating mb-3">
+							<select class="select2-multiple form-select" name="states[]"
+								multiple="multiple">
+								<th:block th:each="cate : ${categories}" th:object="${cate}">
+									<option th:value="${cate.seq}">[[*{name}]]</option>
+								</th:block>
+							</select>
+						</div>
+
+						<div class="d-flex justify-content-end">
+							<button class="btn btn-primary mt-3">[(#{button.nutri.write})]</button>
+						</div>
+					</form>
+				</div>
+			</div>
+			<!-- Content End -->
+
+		</th:block>
+	</th:block>
+</body>
+</html>
