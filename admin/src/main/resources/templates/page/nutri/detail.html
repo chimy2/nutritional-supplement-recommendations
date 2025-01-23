@@ -1,33 +1,114 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head >
-<meta charset="UTF-8">
+<head>
+<meta charset="UTF-8" />
 <title>[[${board.productName}]]</title>
 </head>
 <body>
 	<th:block th:replace="~{layout/base.html}">
 		<th:block th:fragment="content">
-
 			<!-- Content Start -->
 			<div class="container-fluid pt-4 px-4">
 				<div class="bg-secondary rounded h-100 p-4">
-					<th:block th:object="${board}" >
-						<h2 class="mb-2">[[*{productName}]]</h2>
-						<hr>
-						<div class="form-floating">
-							<p class="pre-line">[[*{companyName}]]</p>
-						</div>
+					<th:block th:object="${board}">
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th scope="col" class="w-25">종류</th>
+									<th scope="col" colspan="3" class="w-75 text-center">내용</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:if="${not #strings.isEmpty(board.productImage)}">
+									<td colspan="4" class="py-4 text-center"><img
+										th:if="${#strings.startsWith(board.productImage,'img/productinfo/')}"
+										class="img-fluid"
+										th:src="@{/{img}(img=${board.productImage})}" /> <img
+										th:unless="${#strings.startsWith(board.productImage,'img/productinfo/')}"
+										class="img-fluid" th:src="@{${board.productImage}}" /></td>
+								</tr>
+								<tr>
+									<th scope="row" class="align-middle">제품명</th>
+									<td colspan="3">[[*{productName}]]</td>
+								</tr>
+								<tr>
+									<th scope="row" class="align-middle w-25">신고번호</th>
+									<td class="align-middle w-25">[[*{reportNo}]]</td>
+									<th scope="row" class="align-middle w-25">회사명</th>
+									<td class="w-25">[[*{companyName}]]</td>
+								</tr>
+								<tr>
+									<th scope="row" class="align-middle">등록일자</th>
+									<td class="align-middle">
+										[[*{#temporals.format(registrationDate, 'yyyy.MM.dd')}]]</td>
+									<th scope="row" class="align-middle">소비기한</th>
+									<td>[[*{expirationDate}]]</td>
+								</tr>
+								<tr>
+									<th scope="row" class="align-middle">성상</th>
+									<td colspan="3">
+										<p class="pre-line">[[*{medicationType}]]</p>
+									</td>
+								</tr>
+								<tr>
+									<th scope="row" class="align-middle">섭취량/섭취방법</th>
+									<td colspan="3">
+										<p class="pre-line">[[*{ingestionMethod}]]</p>
+									</td>
+								</tr>
+								<tr>
+									<th score="row" class="align-middle">포장 재질</th>
+									<td colspan="3">
+										<p class="pre-line">[[*{packagingMaterial}]]</p>
+									</td>
+								</tr>
+								<tr>
+									<th score="row" class="align-middle">포장 방법</th>
+									<td colspan="3">
+										<p class="pre-line">[[*{packagingMethod}]]</p>
+									</td>
+								</tr>
+								<tr>
+									<th score="row" class="align-middle">보존 및 유통기준</th>
+									<td colspan="3">
+										<p class="pre-line">[[*{preservation}]]</p>
+									</td>
+								</tr>
+								<tr>
+									<th scope="row" class="align-middle">섭취 시 주의사항</th>
+									<td colspan="3">
+										<p class="pre-line">[[*{precautionsForIngestion}]]</p>
+									</td>
+								</tr>
+								<tr>
+									<th score="row" class="align-middle">기능성 내용</th>
+									<td colspan="3">
+										<p class="pre-line">[[*{functionalContent}]]</p>
+									</td>
+								</tr>
+								<tr>
+									<th score="row" class="align-middle">기준 및 규격</th>
+									<td colspan="3">
+										<p class="pre-line">[[*{standardsAndSpecifications}]]</p>
+									</td>
+								</tr>
+							</tbody>
+						</table>
 						<div class="d-flex justify-content-end mt-2">
-							<button class="btn btn-primary" onclick="returnPage()">[(#{button.return})]</button>
-							<a class="btn btn-primary ms-2" th:href="@{/notice/{seq}/edit(seq=${board.seq})}">[(#{button.notice.edit})]</a>
-							<button class="btn btn-primary ms-2" th:onclick="|openDeleteModal(${board.seq})|">[(#{button.notice.delete})]</button>
+							<button class="btn btn-primary" onclick="returnPage()">
+								[(#{button.return})]</button>
+							<a class="btn btn-primary ms-2"
+								th:href="@{/nutri/{seq}/edit(seq=${board.seq})}">
+								[(#{button.nutri.edit})] </a>
+							<button class="btn btn-primary ms-2"
+								th:onclick="|openDeleteModal(${board.seq})|">
+								[(#{button.nutri.delete})]</button>
 						</div>
 					</th:block>
 				</div>
 			</div>
 			<!-- Content End -->
-
 		</th:block>
 	</th:block>
 </body>
