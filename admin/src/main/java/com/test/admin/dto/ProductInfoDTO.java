@@ -1,8 +1,8 @@
 package com.test.admin.dto;
 
 import java.time.LocalDateTime;
-
-import org.springframework.format.annotation.DateTimeFormat;
+import java.util.List;
+import java.util.Optional;
 
 import com.test.admin.board.BoardDTO;
 import com.test.admin.entity.ProductInfo;
@@ -37,25 +37,33 @@ public class ProductInfoDTO extends BoardDTO {
 	private String precautionsForIngestion;
 	private String functionalContent;
 	private String standardsAndSpecifications;
+	
+	private List<IngredientDTO> ingredients;
+	
+	private List<Long> ingredientSeqs;
 
 	@Override
 	public ProductInfo toEntity() {
-		return ProductInfo.builder()
-				.seq(this.seq)
-				.productImage(this.productImage)
-				.companyName(this.companyName)
-				.productName(this.productName)
-				.reportNo(this.reportNo)
-				.registrationDate(this.registrationDate)
-				.expirationDate(this.expirationDate)
-				.medicationType(this.medicationType)
-				.ingestionMethod(this.ingestionMethod)
-				.packagingMaterial(this.packagingMaterial)
-				.packagingMethod(this.packagingMethod)
-				.preservation(this.preservation)
-				.precautionsForIngestion(this.precautionsForIngestion)
-				.functionalContent(this.functionalContent)
-				.standardsAndSpecifications(this.standardsAndSpecifications)
-				.build();
+		ProductInfo.ProductInfoBuilder builder = ProductInfo.builder()
+	            .seq(this.seq)
+	            .productImage(this.productImage)
+	            .companyName(this.companyName)
+	            .productName(this.productName)
+	            .reportNo(this.reportNo)
+	            .registrationDate(this.registrationDate)
+	            .expirationDate(this.expirationDate)
+	            .medicationType(this.medicationType)
+	            .ingestionMethod(this.ingestionMethod)
+	            .packagingMaterial(this.packagingMaterial)
+	            .packagingMethod(this.packagingMethod)
+	            .preservation(this.preservation)
+	            .precautionsForIngestion(this.precautionsForIngestion)
+	            .functionalContent(this.functionalContent)
+	            .standardsAndSpecifications(this.standardsAndSpecifications);
+
+		Optional.ofNullable(this.ingredients)
+				.ifPresent(ings -> builder.ingredients(ings.stream().map(IngredientDTO::toEntity).toList()));
+		
+		 return builder.build();
 	}
 }

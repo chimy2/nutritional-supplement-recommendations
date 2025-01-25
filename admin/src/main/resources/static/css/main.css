@@ -33,6 +33,7 @@
 }
 
 /* select2 */
+
 .form-floating .select2-selection {
 	height: calc(3.5rem + 2px);
 	padding: 1rem 0.75rem;
@@ -40,6 +41,11 @@
 	background-color: #000;
 	background-clip: padding-box;
 	border: 1px solid #000;
+}
+
+.form-floating .select2-container--disabled .select2-selection {
+	border: 0;
+	background-color: #191c24;
 }
 
 .form-floating .select2-selection .select2-search__field {
@@ -67,6 +73,18 @@
 .select2-container .select2-results__options .select2-results__option--highlighted
 	{
 	background-color: var(--primary);
+}
+
+td .form-floating {
+	top: 7px;
+}
+
+td .form-floating .select2-selection__rendered .select2-selection__choice {
+	padding-left: 0;
+}
+
+td .form-floating .select2-selection__choice .select2-selection__choice__display {
+	padding: 0 15px;
 }
 
 /* datetime picker */

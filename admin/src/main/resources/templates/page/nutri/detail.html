@@ -93,6 +93,21 @@
 										<p class="pre-line">[[*{standardsAndSpecifications}]]</p>
 									</td>
 								</tr>
+
+								<tr>
+									<th score="row" class="align-middle">영양 성분</th>
+									<td colspan="3">
+										<div class="form-floating mb-3">
+											<select class="select2-multiple form-select" multiple
+												disabled>
+												<th:block th:each="ingre : ${board.ingredients}"
+													th:object="${ingre}">
+													<option th:value="${ingre.seq}" selected>[[*{name}]]</option>
+												</th:block>
+											</select>
+										</div>
+									</td>
+								</tr>
 							</tbody>
 						</table>
 						<div class="d-flex justify-content-end mt-2">

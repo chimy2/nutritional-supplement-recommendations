@@ -22,8 +22,6 @@ public class AdminService implements UserDetailsService {
 		
 		Admin admin = repository.findById(username);
 
-		System.out.println(admin);
-		
 		if (admin != null) {
 			return new AdminDetails(admin);
 		}

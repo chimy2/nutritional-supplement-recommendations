@@ -32,9 +32,16 @@ public class NutriController extends BoardController<ProductInfoDTO> {
 	@Override
 	public String getWriteView(Model model) {
 		
-		model.addAttribute("categories", ingredientService.getList());
+		model.addAttribute("ingredients", ingredientService.getList());
 		
 		return super.getWriteView(model);
 	}
 	
+	@Override
+	public String getEditView(Model model, Long seq) {
+
+		model.addAttribute("ingredients", ingredientService.getList());
+		
+		return super.getEditView(model, seq);
+	}
 }
