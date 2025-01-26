@@ -27,14 +27,27 @@ public class NutriService extends BoardServiceImpl<ProductInfo, ProductInfoDTO> 
 	
 	@Override
 	public ProductInfoDTO create(ProductInfoDTO dto) {
+		
+		setIngredientsFromIds(dto);
+		
+		return super.create(dto);
+	}
+	
+	@Override
+	public ProductInfoDTO update(ProductInfoDTO dto) {
+		
+		setIngredientsFromIds(dto);
+		
+		return super.update(dto);
+	}
+	
+	public void setIngredientsFromIds(ProductInfoDTO dto) {
+
 		List<Long> ingredientSeqs = dto.getIngredientSeqs();
 		
 		List<IngredientDTO> ingreidients = ingredientService.getList(ingredientSeqs);
 		
 		dto.setIngredients(ingreidients);
 		
-		ProductInfoDTO result = super.create(dto);
-		
-		return result;
 	}
 }
