@@ -10,4 +10,6 @@ public interface IngredientRepository extends JpaRepository<Ingredient, Long>{
 
 	List<Ingredient> findAllByOrderByName();
 
+	List<Ingredient> findAllBySeqIn(List<Long> ingredientSeqs);
+
 }

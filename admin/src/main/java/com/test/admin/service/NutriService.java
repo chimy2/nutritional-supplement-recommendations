@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.test.admin.board.BoardServiceImpl;
 import com.test.admin.dao.ProductInfoQueryRepository;
+import com.test.admin.dto.IngredientDTO;
 import com.test.admin.dto.ProductInfoDTO;
 import com.test.admin.entity.ProductInfo;
 import com.test.admin.repository.ProductInfoRepository;
@@ -15,22 +16,24 @@ public class NutriService extends BoardServiceImpl<ProductInfo, ProductInfoDTO> 
 
 	private final ProductInfoRepository repository;
 	private final ProductInfoQueryRepository queryRepository;
-	private final IngredientProductService ingredientProductService;
+	private final IngredientService ingredientService;
 	
-	public NutriService(ProductInfoRepository repository, ProductInfoQueryRepository queryRepository, IngredientProductService ingredientProductService) {
+	public NutriService(ProductInfoRepository repository, ProductInfoQueryRepository queryRepository, IngredientService ingredientService) {
 		super(repository);
 		this.repository = repository;
 		this.queryRepository = queryRepository;
-		this.ingredientProductService = ingredientProductService;
+		this.ingredientService = ingredientService;
 	}
 	
 	@Override
 	public ProductInfoDTO create(ProductInfoDTO dto) {
 		List<Long> ingredientSeqs = dto.getIngredientSeqs();
 		
-		ProductInfoDTO result = super.create(dto);
+		List<IngredientDTO> ingreidients = ingredientService.getList(ingredientSeqs);
 		
-		ingredientProductService.create(result.getSeq(), ingredientSeqs);
+		dto.setIngredients(ingreidients);
+		
+		ProductInfoDTO result = super.create(dto);
 		
 		return result;
 	}

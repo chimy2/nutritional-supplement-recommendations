@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.test.admin.dto.ProductInfoDTO;
+import com.test.admin.entity.Ingredient;
 import com.test.admin.entity.IngredientProduct;
 import com.test.admin.repository.IngredientProductRepository;
 

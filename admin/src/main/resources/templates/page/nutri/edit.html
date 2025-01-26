@@ -20,22 +20,25 @@
 								<!-- 제품명 -->
 								<div class="form-floating flex-grow-1 col-md-6">
 									<input type="text" class="form-control" id="floatingInput"
-										name="productName" placeholder="Product Name" th:value="${board.productName}" required>
-									<label for="floatingInput">Product Name</label>
+										name="productName" placeholder="Product Name"
+										th:value="${board.productName}" required> <label
+										for="floatingInput">Product Name</label>
 								</div>
 
 								<!-- 신고 번호 -->
 								<div class="form-floating flex-grow-1">
 									<input type="text" class="form-control" id="floatingInput"
-										name="reportNo" placeholder="Report Number" th:value="${board.reportNo}" required>
-									<label for="floatingInput">Report Number</label>
+										name="reportNo" placeholder="Report Number"
+										th:value="${board.reportNo}" required> <label
+										for="floatingInput">Report Number</label>
 								</div>
 							</div>
 
 							<!-- 업체명 -->
 							<div class="form-floating mb-3">
 								<input type="text" class="form-control" id="floatingInput"
-									name="companyName" placeholder="Company Name" th:value="${board.companyName}"> <label
+									name="companyName" placeholder="Company Name"
+									th:value="${board.companyName}"> <label
 									for="floatingInput">Company Name</label>
 							</div>
 
@@ -49,8 +52,10 @@
 										<input type="text" class="form-control datetimepicker-input"
 											id="floatingInput" name="registrationDate"
 											placeholder="Registration Date"
-											data-target=".nutri-datetimepicker" th:value="${#temporals.format(board.registrationDate, 'MM/dd/yyyy hh:mm a')}" required><label
-											for="floatingInput">Registration Date</label>
+											data-target=".nutri-datetimepicker"
+											th:value="${#temporals.format(board.registrationDate, 'MM/dd/yyyy hh:mm a')}"
+											required><label for="floatingInput">Registration
+											Date</label>
 										<div class="input-group-append"
 											data-target=".nutri-datetimepicker"
 											data-toggle="datetimepicker">
@@ -63,7 +68,8 @@
 								<!-- 소비기한 -->
 								<div class="form-floating flex-grow-1">
 									<input type="text" class="form-control" id="floatingInput"
-										name="expirationDate" placeholder="Expiration Date" th:value="${board.expirationDate}"> <label
+										name="expirationDate" placeholder="Expiration Date"
+										th:value="${board.expirationDate}"> <label
 										for="floatingInput">Expiration Date</label>
 								</div>
 							</div>
@@ -138,19 +144,20 @@
 							<!-- 제품 이미지 -->
 							<div class="form-floating mb-3">
 								<input type="url" class="form-control" id="floatingInput"
-									name="productImage" placeholder="Product Image Link" th:value="${board.productImage}"> <label
+									name="productImage" placeholder="Product Image Link"
+									th:value="${board.productImage}"> <label
 									for="floatingInput">Product Image Link</label>
 							</div>
 
 							<div class="form-floating mb-3">
-								<select class="select2-multiple form-select" name="ingredientSeqs"
-									multiple>
+								<select class="select2-multiple form-select"
+									name="ingredientSeqs" multiple>
 									<th:block th:each="ingre : ${ingredients}" th:object="${ingre}">
-										<option th:value="${ingre.seq}">[[*{name}]]</option>
+										<option th:value="${ingre.seq}"
+											th:selected="${board.ingredients.contains(ingre)}">[[*{name}]]</option>
 									</th:block>
 								</select>
 							</div>
-							
 							<div class="d-flex justify-content-end mt-2">
 								<a class="btn btn-primary"
 									th:href="@{/nutri/{seq}(seq=${board.seq})}">[(#{button.return})]</a>

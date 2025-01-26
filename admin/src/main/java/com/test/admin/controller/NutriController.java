@@ -32,7 +32,7 @@ public class NutriController extends BoardController<ProductInfoDTO> {
 	@Override
 	public String getWriteView(Model model) {
 		
-		model.addAttribute("ingredients", ingredientService.getList());
+		model.addAttribute("ingredients", ingredientService.getDTOList());
 		
 		return super.getWriteView(model);
 	}
@@ -40,7 +40,7 @@ public class NutriController extends BoardController<ProductInfoDTO> {
 	@Override
 	public String getEditView(Model model, Long seq) {
 
-		model.addAttribute("ingredients", ingredientService.getList());
+		model.addAttribute("ingredients", ingredientService.getDTOList());
 		
 		return super.getEditView(model, seq);
 	}

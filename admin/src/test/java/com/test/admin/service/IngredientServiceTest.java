@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.test.admin.dto.IngredientDTO;
 import com.test.admin.entity.Ingredient;
 
 @SpringBootTest
@@ -17,9 +18,9 @@ class IngredientServiceTest {
 	private IngredientService service;
 
 	@Test
-	void test() {
+	void testGetDTOList() {
 		
-		List<Ingredient> list = service.getList();
+		List<IngredientDTO> list = service.getDTOList();
 		
 		System.out.println(list);
 		
