@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class NoticeDTO extends BoardDTO {
+public class NoticeDTO extends BoardDTO<Notice> {
 
 	private Long seq;
 	

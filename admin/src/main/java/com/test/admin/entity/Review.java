@@ -2,6 +2,8 @@ package com.test.admin.entity;
 
 import java.time.LocalDateTime;
 
+import com.test.admin.board.Board;
+import com.test.admin.board.BoardDTO;
 import com.test.admin.dto.NoticeDTO;
 import com.test.admin.dto.ReviewDTO;
 
@@ -10,6 +12,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,7 +28,7 @@ import lombok.ToString;
 @Table(name = "review")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Review {
+public class Review extends Board {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,17 +42,18 @@ public class Review {
 	
 	private LocalDateTime regDate;
 
-	@Column(name = "admin_seq")
-	private Long memberSeq;
-	
+	@ManyToOne
+	@JoinColumn(name = "member_seq")
+	private Member member;
+
+	@Override
 	public ReviewDTO toDTO() {
-//		return ReviewDTO.builder()
-//				.seq(this.seq)
-//				.title(this.title)
-//				.content(this.content)
-//				.regDate(this.regDate)
-//				.admin_seq(this.admin_seq)
-//				.build();
-		return null;
+		return ReviewDTO.builder()
+				.seq(this.seq)
+				.title(this.title)
+				.content(this.content)
+				.regDate(this.regDate)
+				.member(this.member.toDTO())
+				.build();
 	}
 }
