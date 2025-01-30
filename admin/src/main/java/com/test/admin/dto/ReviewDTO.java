@@ -18,6 +18,10 @@ public class ReviewDTO extends BoardDTO<Review> {
 
 	private Long seq;
 	
+	private String category;
+	
+	private String name;
+	
 	private String title;
 	
 	private String content;
@@ -30,6 +34,8 @@ public class ReviewDTO extends BoardDTO<Review> {
 	public Review toEntity() {
 		return Review.builder()
 				.seq(this.seq)
+				.category(this.category)
+				.name(this.name)
 				.title(this.title)
 				.content(this.content)
 				.regDate(this.regDate)

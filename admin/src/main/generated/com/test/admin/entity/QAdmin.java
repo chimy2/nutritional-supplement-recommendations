@@ -19,6 +19,8 @@ public class QAdmin extends EntityPathBase<Admin> {
 
     public static final QAdmin admin = new QAdmin("admin");
 
+    public final com.test.admin.board.QBoard _super = new com.test.admin.board.QBoard(this);
+
     public final DatePath<java.time.LocalDate> birthDate = createDate("birthDate", java.time.LocalDate.class);
 
     public final StringPath email = createString("email");

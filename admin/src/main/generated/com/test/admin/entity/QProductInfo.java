@@ -7,6 +7,7 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
+import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
@@ -19,6 +20,8 @@ public class QProductInfo extends EntityPathBase<ProductInfo> {
 
     public static final QProductInfo productInfo = new QProductInfo("productInfo");
 
+    public final com.test.admin.board.QBoard _super = new com.test.admin.board.QBoard(this);
+
     public final StringPath companyName = createString("companyName");
 
     public final StringPath expirationDate = createString("expirationDate");
@@ -26,6 +29,8 @@ public class QProductInfo extends EntityPathBase<ProductInfo> {
     public final StringPath functionalContent = createString("functionalContent");
 
     public final StringPath ingestionMethod = createString("ingestionMethod");
+
+    public final ListPath<Ingredient, QIngredient> ingredients = this.<Ingredient, QIngredient>createList("ingredients", Ingredient.class, QIngredient.class, PathInits.DIRECT2);
 
     public final StringPath medicationType = createString("medicationType");
 
@@ -41,7 +46,7 @@ public class QProductInfo extends EntityPathBase<ProductInfo> {
 
     public final StringPath productName = createString("productName");
 
-    public final StringPath registrationDate = createString("registrationDate");
+    public final DateTimePath<java.time.LocalDateTime> registrationDate = createDateTime("registrationDate", java.time.LocalDateTime.class);
 
     public final StringPath reportNo = createString("reportNo");
 

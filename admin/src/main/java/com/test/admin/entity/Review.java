@@ -34,9 +34,11 @@ public class Review extends Board {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long seq;
 	
-	private String title;
-	
 	private String category;
+	
+	private String name;
+	
+	private String title;
 	
 	private String content;
 	
@@ -50,6 +52,8 @@ public class Review extends Board {
 	public ReviewDTO toDTO() {
 		return ReviewDTO.builder()
 				.seq(this.seq)
+				.category(this.category)
+				.name(this.name)
 				.title(this.title)
 				.content(this.content)
 				.regDate(this.regDate)
