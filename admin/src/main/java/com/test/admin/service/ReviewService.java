@@ -1,5 +1,7 @@
 package com.test.admin.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.test.admin.board.BoardServiceImpl;
@@ -20,5 +22,9 @@ public class ReviewService extends BoardServiceImpl<Review, ReviewDTO>{
 		super(repository);
 		this.repository = repository;
 		this.queryRepository = queryRepository;
+	}
+	
+	public List<ReviewDTO> getList() {
+		return repository.findAll().stream().map(Review::toDTO).toList();
 	}
 }

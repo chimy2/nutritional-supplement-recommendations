@@ -3,6 +3,8 @@ package com.test.admin.entity;
 import java.time.LocalDate;
 
 import com.test.admin.board.Board;
+import com.test.admin.board.BoardDTO;
+import com.test.admin.dto.AdminDTO;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,7 +24,7 @@ import lombok.ToString;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Admin {
+public class Admin extends Board {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,4 +35,17 @@ public class Admin {
 	private String name;
 	private LocalDate birthDate;
 	private String email;
+	
+	
+	@Override
+	public AdminDTO toDTO() {
+		return AdminDTO.builder()
+				.seq(this.seq)
+				.id(this.id)
+				.pw(this.pw)
+				.name(this.name)
+				.birthDate(this.birthDate)
+				.email(this.email)
+				.build();
+	}
 }

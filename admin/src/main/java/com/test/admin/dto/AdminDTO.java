@@ -3,6 +3,7 @@ package com.test.admin.dto;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import com.test.admin.board.BoardDTO;
 import com.test.admin.entity.Admin;
 
 import lombok.AllArgsConstructor;
@@ -14,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AdminDTO {
+public class AdminDTO extends BoardDTO<Admin> {
 
 	private Long seq;
 	private String id;

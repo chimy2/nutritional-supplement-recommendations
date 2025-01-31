@@ -6,17 +6,25 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.test.admin.auth.AdminDetails;
+import com.test.admin.board.BoardRepository;
+import com.test.admin.board.BoardServiceImpl;
+import com.test.admin.dto.AdminDTO;
 import com.test.admin.entity.Admin;
 import com.test.admin.repository.AdminRepository;
 
 import lombok.RequiredArgsConstructor;
 
 @Service
-@RequiredArgsConstructor
-public class AdminService implements UserDetailsService {
+public class AdminService extends BoardServiceImpl<Admin, AdminDTO> implements UserDetailsService {
 	
+
 	private final AdminRepository repository;
 
+	public AdminService(AdminRepository repository) {
+		super(repository);
+		this.repository = repository;
+	}
+	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		

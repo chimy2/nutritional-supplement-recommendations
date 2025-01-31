@@ -4,9 +4,10 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import com.test.admin.board.BoardRepository;
 import com.test.admin.entity.Admin;
 
-public interface AdminRepository extends JpaRepository<Admin, Long>{
+public interface AdminRepository extends BoardRepository<Admin>{
 
 	Admin findById(String id);
 

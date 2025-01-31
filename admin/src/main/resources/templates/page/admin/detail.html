@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8" />
+<title>[[${board.title}]]</title>
+</head>
+<body>
+	<th:block th:replace="~{layout/base.html}">
+		<th:block th:fragment="content">
+			<!-- Content Start -->
+			<div class="container-fluid pt-4 px-4">
+				<div class="bg-secondary rounded h-100 p-4">
+					<th:block th:object="${board}">
+						<table class="table table-striped">
+							<tbody>
+								<tr>
+									<th scope="row" class="w-25 align-middle">제목</th>
+									<td class="w-75" colspan="3">[[*{title}]]</td>
+								</tr>
+								<tr>
+									<th scope="row" class="align-middle w-25">작성자</th>
+									<td class="align-middle w-25">[[*{member.nickname}]]</td>
+									<th scope="row" class="align-middle">등록일자</th>
+									<td class="align-middle">
+										[[*{#temporals.format(regDate, 'yyyy.MM.dd')}]]</td>
+								</tr>
+								<tr>
+									<th scope="row" class="align-middle">내용</th>
+									<td colspan="3">
+										<p class="pre-line">[[*{content}]]</p>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<div class="d-flex justify-content-end mt-2">
+							<button class="btn btn-primary" onclick="returnPage()">
+								[(#{button.return})]</button>
+							<button class="btn btn-primary ms-2"
+								th:onclick="|openDeleteModal(${board.seq})|">
+								[(#{button.review.delete})]</button>
+						</div>
+					</th:block>
+				</div>
+			</div>
+			<!-- Content End -->
+		</th:block>
+	</th:block>
+</body>
+</html>
