@@ -34,6 +34,7 @@ public class AdminDTO extends BoardDTO<Admin> {
 
 	public Admin toEntity() {
 		return Admin.builder()
+				.seq(seq)
 				.id(id)
 				.pw(pw)
 				.name(name)

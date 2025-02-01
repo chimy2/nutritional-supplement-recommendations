@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.test.admin.dto.AdminDTO;
 import com.test.admin.dto.NoticeDTO;
 
 @SpringBootTest
@@ -48,9 +49,10 @@ public class NoticeServiceTest {
 					.title(temp[i])
 					.content(temp[i + 1])
 					.regDate(LocalDateTime.now())
-					.adminSeq(random.nextLong(10) + 1)
+					.admin(AdminDTO.builder().seq(random.nextLong(10) + 1).build())
 					.build();
 			
+			System.out.println(dto);
 			result.add(dto);
 		}
 		

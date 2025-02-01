@@ -3,6 +3,7 @@ package com.test.admin.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.test.admin.board.BoardController;
@@ -24,9 +25,18 @@ public class NoticeController extends BoardController<NoticeDTO> {
 	@PostMapping
 	public String post(Model model, NoticeDTO dto) {
 		
-	    dto.setAdminSeq(service.getCurrentAdminSeq());
+	    dto.setAdmin(service.getCurrentAdmin());
 	    
 	    return super.post(model, dto);
+	}
+	
+	@Override
+	@PutMapping("/{seq}")
+	public String put(Model model, Long seq, NoticeDTO dto) {
+
+	    dto.setAdmin(service.getCurrentAdmin());
+		
+		return super.put(model, seq, dto);
 	}
 	
 }

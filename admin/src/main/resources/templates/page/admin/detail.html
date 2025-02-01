@@ -3,7 +3,7 @@
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="UTF-8" />
-<title>[[${board.title}]]</title>
+<title>[[#{title}]]</title>
 </head>
 <body>
 	<th:block th:replace="~{layout/base.html}">
@@ -15,20 +15,20 @@
 						<table class="table table-striped">
 							<tbody>
 								<tr>
-									<th scope="row" class="w-25 align-middle">제목</th>
-									<td class="w-75" colspan="3">[[*{title}]]</td>
+									<th scope="row" class="w-25 align-middle">아이디</th>
+									<td class="w-75" colspan="3">[[*{id}]]</td>
 								</tr>
 								<tr>
-									<th scope="row" class="align-middle w-25">작성자</th>
-									<td class="align-middle w-25">[[*{member.nickname}]]</td>
-									<th scope="row" class="align-middle">등록일자</th>
+									<th scope="row" class="align-middle w-25">이름</th>
+									<td class="align-middle w-25">[[*{name}]]</td>
+									<th scope="row" class="align-middle">생년월일</th>
 									<td class="align-middle">
-										[[*{#temporals.format(regDate, 'yyyy.MM.dd')}]]</td>
+										[[*{#temporals.format(birthDate, 'yyyy.MM.dd')}]]</td>
 								</tr>
 								<tr>
-									<th scope="row" class="align-middle">내용</th>
+									<th scope="row" class="align-middle">이메일</th>
 									<td colspan="3">
-										<p class="pre-line">[[*{content}]]</p>
+										[[*{email}]]
 									</td>
 								</tr>
 							</tbody>
@@ -36,9 +36,12 @@
 						<div class="d-flex justify-content-end mt-2">
 							<button class="btn btn-primary" onclick="returnPage()">
 								[(#{button.return})]</button>
+							<a class="btn btn-primary ms-2"
+								th:href="@{/admin/{seq}/edit(seq=${board.seq})}">
+								[(#{button.admin.edit})] </a>
 							<button class="btn btn-primary ms-2"
 								th:onclick="|openDeleteModal(${board.seq})|">
-								[(#{button.review.delete})]</button>
+								[(#{button.admin.delete})]</button>
 						</div>
 					</th:block>
 				</div>

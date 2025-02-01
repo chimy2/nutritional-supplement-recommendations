@@ -24,7 +24,7 @@ public class NoticeDTO extends BoardDTO<Notice> {
 	
 	private LocalDateTime regDate;
 	
-	private Long adminSeq;
+	private AdminDTO admin;
 
 	@Override
 	public Notice toEntity() {
@@ -33,7 +33,7 @@ public class NoticeDTO extends BoardDTO<Notice> {
 				.title(this.title)
 				.content(this.content)
 				.regDate(this.regDate)
-				.adminSeq(this.adminSeq)
+				.admin(this.admin.toEntity())
 				.build();
 	}
 	

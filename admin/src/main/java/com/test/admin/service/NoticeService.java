@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 import com.test.admin.auth.AdminDetails;
 import com.test.admin.board.BoardServiceImpl;
 import com.test.admin.dao.NoticeQueryRepository;
+import com.test.admin.dto.AdminDTO;
 import com.test.admin.dto.NoticeDTO;
+import com.test.admin.entity.Admin;
 import com.test.admin.entity.Notice;
 import com.test.admin.repository.NoticeRepository;
 
@@ -37,12 +39,20 @@ public class NoticeService extends BoardServiceImpl<Notice, NoticeDTO> {
 		return super.create(dto);
 	}
 	
-	public Long getCurrentAdminSeq() {
+	public AdminDTO getCurrentAdmin() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-		AdminDetails admin = (AdminDetails) authentication.getPrincipal();
+		AdminDetails principal = (AdminDetails) authentication.getPrincipal();
 		
-	    return admin.getSeq();
+	    return principal.getAdmin().toDTO();
+	}
+
+	public void deleteAdminNoticeList(Long adminSeq) {
+		Admin admin = Admin.builder()
+				.seq(adminSeq)
+				.build();
+		
+		repository.deleteByAdmin(admin);
 	}
 	
 }

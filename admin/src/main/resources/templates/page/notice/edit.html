@@ -32,8 +32,8 @@
 									th:href="@{/notice/{seq}(seq=${board.seq})}">[(#{button.return})]</a>
 								<button class="btn btn-primary ms-2">[(#{button.notice.edit})]</button>
 							</div>
-							<input type="hidden" name="regDate" th:value="${board.regDate}">
-							<input type="hidden" name="adminSeq" th:value="${board.adminSeq}">
+							<input type="hidden" name="regDate" th:value="${#temporals.format(board.regDate, 'MM/dd/yyyy hh:mm a', T(java.util.Locale).ENGLISH)}">
+							<input type="hidden" name="adminSeq" th:value="${board.admin.seq}">
 						</form>
 					</th:block>
 				</div>
