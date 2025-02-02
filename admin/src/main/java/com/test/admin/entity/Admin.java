@@ -1,15 +1,18 @@
 package com.test.admin.entity;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 import com.test.admin.board.Board;
-import com.test.admin.board.BoardDTO;
 import com.test.admin.dto.AdminDTO;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -36,6 +39,9 @@ public class Admin extends Board {
 	private LocalDate birthDate;
 	private String email;
 	
+	@ManyToMany
+	@JoinTable(name = "adminAuthList", joinColumns = @JoinColumn(name = "admin_seq"), inverseJoinColumns = @JoinColumn(name = "adminAuth_seq"))
+	private Set<AdminAuth> auths;
 	
 	@Override
 	public AdminDTO toDTO() {
@@ -46,6 +52,7 @@ public class Admin extends Board {
 				.name(this.name)
 				.birthDate(this.birthDate)
 				.email(this.email)
+				.auths(this.auths)
 				.build();
 	}
 }

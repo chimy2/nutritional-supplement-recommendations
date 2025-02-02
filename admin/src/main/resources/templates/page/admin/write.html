@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<title>[[#{title.admin.write}]]</title>
+
+</head>
+<body>
+	<th:block th:replace="~{layout/base.html}">
+		<th:block th:fragment="content">
+
+			<!-- Content Start -->
+			<div class="container-fluid pt-4 px-4">
+				<div class="bg-secondary rounded h-100 p-4">
+					<h6 class="mb-4">[[#{content.title.admin.write}]]</h6>
+					<form method="post" action="/admin">
+						<div class="d-flex flex-wrap gap-3 mb-3">
+							<!-- 아이디 -->
+							<div class="form-floating flex-grow-1">
+								<!-- <input type="text" class="form-control input-admin-id" id="floatingInput"
+									name="id" placeholder="ID" pattern="[a-zA-Z0-9]{4,12}" required> -->
+								<input type="text" class="form-control input-admin-id" id="floatingInput" value="test"
+									name="id" placeholder="ID" pattern="[a-zA-Z0-9]{4,12}" required>
+								<label for="floatingInput">ID</label>
+								<p class="d-none text-danger input-admin-id-error mt-2 mb-0"></p>
+							</div>
+
+							<!-- 비밀번호 -->
+							<input type="hidden" name="pw" value="1234">
+							<!-- 
+							<div class="form-floating flex-grow-1">
+								<input type="text" class="form-control" id="floatingInput"
+									name="reportNo" placeholder="Report Number" required> <label
+									for="floatingInput">Report Number</label>
+							</div>
+							 -->
+						</div>
+						
+
+						<div class="form-floating mb-3">
+							<!-- 이메일 -->
+							<div class="form-floating flex-grow-1">
+								<!-- <input type="email" class="form-control input-admin-email" id="floatingInput"
+									name="email" placeholder="Email" pattern="[a-zA-Z0-9._%+-]{2,}@[a-zA-Z0-9.-]{2,}\.[a-zA-Z]{2,}" required> -->
+								<input type="email" class="form-control input-admin-email" id="floatingInput" value="test@test.com"
+									name="email" placeholder="Email" pattern="[a-zA-Z0-9._%+-]{2,}@[a-zA-Z0-9.-]{2,}\.[a-zA-Z]{2,}" required>
+								<label for="floatingInput">Email</label>
+								<p class="text-danger input-admin-email-error mt-2 mb-0"></p>
+							</div>
+						
+						</div>
+
+						<div class="d-flex flex-wrap gap-3 mb-3">
+							<!-- 이름 -->
+							<div class="form-floating flex-grow-1">
+								<!-- <input type="text" class="form-control" id="floatingInput"
+									name="name" placeholder="Name" required>  -->
+								<input type="text" class="form-control" id="floatingInput" value="테스트"
+									name="name" placeholder="Name" required> 
+									<label
+									for="floatingInput">Name</label>
+							</div>
+							
+							<!-- 생년 월일 -->
+							<div class="form-floating flex-grow-1">
+
+								<div
+									class=" form-floating input-group date admin-datetimepicker"
+									id="floatingInput" data-target-input="nearest">
+									<!-- <input type="text" class="form-control datetimepicker-input"
+										id="floatingInput" name="birthDate"
+										placeholder="Birth Date" 
+										data-target=".admin-datetimepicker" required><label
+										for="floatingInput">Birth Date</label> -->
+									<input type="text" class="form-control datetimepicker-input"
+										id="floatingInput" name="birthDate"
+										placeholder="Birth Date" value="2000-01-01"
+										data-target=".admin-datetimepicker" required><label
+										for="floatingInput">Birth Date</label>
+									<div class="input-group-append"
+										data-target=".admin-datetimepicker"
+										data-toggle="datetimepicker">
+										<div class="input-group-text">
+											<i class="fa fa-calendar"></i>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+
+						<div class="form-floating mb-3">
+							<table class="table table-dark text-center align-middle">
+								<thead>
+									<tr>
+										<th class="w-25 pt-3 rounded-top-left">
+											권한 기능
+										</th>
+										<th class="w-25 pt-3">
+											권한 여부
+										</th>
+										<th class="w-50 pt-3 rounded-top-right">
+											주요 권한
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr class="h-px-70">
+										<th>슈퍼 관리자</th>
+										<td>
+											<input type="checkbox" class="btn-check" id="btnSuperManage" name="auths" value="ROLE_SUPER" autocomplete="off">
+											<label class="btn btn-outline-primary px-3" for="btnSuperManage">관리</label>
+										</td>
+										<td></td>
+									</tr>
+									<tr class="h-px-70">
+										<th>공지사항</th>
+										<td>
+											<input type="checkbox" class="btn-check" id="btnNoticeManage" autocomplete="off">
+											<label class="btn btn-outline-primary px-3" for="btnNoticeManage">관리</label>
+										</td>
+										<td>
+											<input type="checkbox" class="btn-check btn-check-notice" id="btnNoticeRead" name="auths" value="ROLE_NOTICE_READ" autocomplete="off">
+											<label class="btn btn-outline-primary px-3 mx-1" for="btnNoticeRead">조회</label>
+											<input type="checkbox" class="btn-check btn-check-notice" id="btnNoticeCreate" name="auths" value="ROLE_NOTICE_CREATE" autocomplete="off">
+											<label class="btn btn-outline-primary px-3 mx-1" for="btnNoticeCreate">생성</label>
+											<input type="checkbox" class="btn-check btn-check-notice" id="btnNoticeUpdate" name="auths" value="ROLE_NOTICE_UPDATE" autocomplete="off">
+											<label class="btn btn-outline-primary px-3 mx-1" for="btnNoticeUpdate">수정</label>
+											<input type="checkbox" class="btn-check btn-check-notice" id="btnNoticeDelete" name="auths" value="ROLE_NOTICE_DELETE" autocomplete="off">
+											<label class="btn btn-outline-primary px-3 mx-1" for="btnNoticeDelete">삭제</label>
+											<input type="checkbox" class="d-none btn-check-notice-all" data-target="btn-check-notice" name="auths" value="ROLE_NOTICE_ALL" autocomplete="off">
+										</td>
+									</tr>
+									<tr class="h-px-70">
+										<th>영양제</th>
+										<td>
+											<input type="checkbox" class="btn-check" id="btnNutriManage" autocomplete="off">
+											<label class="btn btn-outline-primary px-3" for="btnNutriManage">관리</label>
+										</td>
+										<td>
+											<input type="checkbox" class="btn-check btn-check-nutri" id="btnNutriRead" name="auths" value="ROLE_NUTRI_READ" autocomplete="off">
+											<label class="btn btn-outline-primary px-3 mx-1" for="btnNutriRead">조회</label>
+											<input type="checkbox" class="btn-check btn-check-nutri" id="btnNutriCreate" name="auths" value="ROLE_NUTRI_CREATE" autocomplete="off">
+											<label class="btn btn-outline-primary px-3 mx-1" for="btnNutriCreate">생성</label>
+											<input type="checkbox" class="btn-check btn-check-nutri" id="btnNutriUpdate" name="auths" value="ROLE_NUTRI_UPDATE" autocomplete="off">
+											<label class="btn btn-outline-primary px-3 mx-1" for="btnNutriUpdate">수정</label>
+											<input type="checkbox" class="btn-check btn-check-nutri" id="btnNutriDelete" name="auths" value="ROLE_NUTRI_DELETE" autocomplete="off">
+											<label class="btn btn-outline-primary px-3 mx-1" for="btnNutriDelete">삭제</label>
+											<input type="checkbox" class="d-none btn-check-nutri-all" data-target="btn-check-nutri" name="auths" value="ROLE_NUTRI_ALL" autocomplete="off">
+										</td>
+									</tr>
+									<tr class="h-px-70">
+										<th class="rounded-bottom-left">리뷰</th>
+										<td>
+											<input type="checkbox" class="btn-check" id="btnReviewManage" autocomplete="off">
+											<label class="btn btn-outline-primary px-3" for="btnReviewManage">관리</label>
+										</td>
+										<td class="rounded-bottom-right">
+											<input type="checkbox" class="btn-check btn-check-review" id="btnReviewRead" name="auths" value="ROLE_REVIEW_READ" autocomplete="off">
+											<label class="btn btn-outline-primary px-3 mx-1" for="btnReviewRead">조회</label>
+											<input type="checkbox" class="btn-check btn-check-review" id="btnReviewDelete" name="auths" value="ROLE_REVIEW_DELETE" autocomplete="off">
+											<label class="btn btn-outline-primary px-3 mx-1" for="btnReviewDelete">삭제</label>
+											<input type="checkbox" class="d-none btn-check-review-all" data-target="btn-check-review" name="auths" value="ROLE_REVIEW_ALL" autocomplete="off">
+										</td>
+									</tr>
+									<tr class="h-px-70">
+										<th class="rounded-bottom-left">관리자</th>
+										<td>
+											<input type="checkbox" class="btn-check" id="btnAdminManage" autocomplete="off">
+											<label class="btn btn-outline-primary px-3" for="btnAdminManage">관리</label>
+										</td>
+										<td class="rounded-bottom-right">
+											<input type="checkbox" class="btn-check btn-check-admin" id="btnAdminRead" name="auths" value="ROLE_ADMIN_READ" autocomplete="off">
+											<label class="btn btn-outline-primary px-3 mx-1" for="btnAdminRead">조회</label>
+											<input type="checkbox" class="btn-check btn-check-admin" id="btnAdminCreate" name="auths" value="ROLE_ADMIN_CREATE" autocomplete="off">
+											<label class="btn btn-outline-primary px-3 mx-1" for="btnAdminCreate">생성</label>
+											<input type="checkbox" class="btn-check btn-check-admin" id="btnAdminUpdate" name="auths" value="ROLE_ADMIN_UPDATE" autocomplete="off">
+											<label class="btn btn-outline-primary px-3 mx-1" for="btnAdminUpdate">수정</label>
+											<input type="checkbox" class="btn-check btn-check-admin" id="btnAdminDelete" name="auths" value="ROLE_ADMIN_DELETE" autocomplete="off">
+											<label class="btn btn-outline-primary px-3 mx-1" for="btnAdminDelete">삭제</label>
+											<input type="checkbox" class="d-none btn-check-admin-all" data-target="btn-check-admin" name="auths" value="ROLE_ADMIN_ALL" autocomplete="off">
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+
+						<div class="d-flex justify-content-end">
+							<button class="btn btn-primary mt-3">[(#{button.admin.write})]</button>
+						</div>
+					</form>
+				</div>
+			</div>
+			<!-- Content End -->
+
+		</th:block>
+	</th:block>
+</body>
+</html>

@@ -445,7 +445,26 @@ INSERT INTO productInfo (seq,productImage,CompanyName,productName,ReportNo,regis
 (444,'https://gdimg.gmarket.co.kr/4077936695/still/600?ver=1730979527','준비중','알로에 콜라겐 젤리스틱','준비중','2021-11-10','준비중','준비중','준비중','준비중','준비중','준비중','준비중','준비중','준비중'),
 (481,'https://siksamenu.co.kr/blog/drfood/202002061136177340.JPG','준비중','효소홍삼 친구랑','준비중','2022-12-05','준비중','준비중','준비중','준비중','준비중','준비중','준비중','준비중','준비중');
 
-
+INSERT INTO adminAuth(role) VALUES 
+('ROLE_SUPER'),
+('ROLE_NOTICE_ALL'),
+('ROLE_NOTICE_READ'),
+('ROLE_NOTICE_CREATE'),
+('ROLE_NOTICE_UPDATE'),
+('ROLE_NOTICE_DELETE'),
+('ROLE_NUTRI_ALL'),
+('ROLE_NUTRI_READ'),
+('ROLE_NUTRI_CREATE'),
+('ROLE_NUTRI_UPDATE'),
+('ROLE_NUTRI_DELETE'),
+('ROLE_REVIEW_ALL'),
+('ROLE_REVIEW_READ'),
+('ROLE_REVIEW_DELETE'),
+('ROLE_ADMIN_ALL'),
+('ROLE_ADMIN_READ'),
+('ROLE_ADMIN_CREATE'),
+('ROLE_ADMIN_UPDATE'),
+('ROLE_ADMIN_DELETE');
 
 commit;
 

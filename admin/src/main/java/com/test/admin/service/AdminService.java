@@ -3,6 +3,7 @@ package com.test.admin.service;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.test.admin.auth.AdminDetails;
@@ -17,12 +18,14 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class AdminService extends BoardServiceImpl<Admin, AdminDTO> implements UserDetailsService {
 	
-
 	private final AdminRepository repository;
+	
+	private final BCryptPasswordEncoder encoder;
 
-	public AdminService(AdminRepository repository) {
+	public AdminService(AdminRepository repository, BCryptPasswordEncoder encoder) {
 		super(repository);
 		this.repository = repository;
+		this.encoder = encoder;
 	}
 	
 	@Override
@@ -37,4 +40,19 @@ public class AdminService extends BoardServiceImpl<Admin, AdminDTO> implements U
 		return null;
 	}
 
+	public boolean existsById(String id) {
+		return repository.existsById(id);
+	}
+
+	public boolean existsByEmail(String email) {
+		return repository.existsByEmail(email);
+	}
+
+	@Override
+	public AdminDTO create(AdminDTO dto) {
+		
+		System.out.println(dto);
+		dto.setPw(encoder.encode(dto.getPw()));
+		return super.create(dto);
+	}
 }

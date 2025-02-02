@@ -13,4 +13,8 @@ public interface AdminRepository extends BoardRepository<Admin>{
 
 	List<Admin> findBySeqGreaterThanEqual(int seq);
 
+	boolean existsById(String id);
+
+	boolean existsByEmail(String email);
+
 }

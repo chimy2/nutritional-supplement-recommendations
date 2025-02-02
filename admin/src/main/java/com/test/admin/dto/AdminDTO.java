@@ -2,9 +2,11 @@ package com.test.admin.dto;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Set;
 
 import com.test.admin.board.BoardDTO;
 import com.test.admin.entity.Admin;
+import com.test.admin.entity.AdminAuth;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,6 +25,7 @@ public class AdminDTO extends BoardDTO<Admin> {
 	private String name;
 	private LocalDate birthDate;
 	private String email;
+	private Set<AdminAuth> auths;
 	
 	public AdminDTO(String id, String pw, String name, String birthDate, String email) {
 		this.id = id;
@@ -34,12 +37,13 @@ public class AdminDTO extends BoardDTO<Admin> {
 
 	public Admin toEntity() {
 		return Admin.builder()
-				.seq(seq)
-				.id(id)
-				.pw(pw)
-				.name(name)
-				.birthDate(birthDate)
-				.email(email)
+				.seq(this.seq)
+				.id(this.id)
+				.pw(this.pw)
+				.name(this.name)
+				.birthDate(this.birthDate)
+				.email(this.email)
+				.auths(this.auths)
 				.build();
 	}
 }

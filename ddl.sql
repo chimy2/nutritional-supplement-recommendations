@@ -303,7 +303,7 @@ CREATE TABLE `logError` (
 );
 
 CREATE TABLE `healthIngredient` (
-	`Key`	INT	AUTO_INCREMENT PRIMARY KEY,
+	`seq`	INT	AUTO_INCREMENT PRIMARY KEY,
 	`health_seq`	INT	NOT NULL,
 	`ingredient_seq`	INT	NOT NULL,
     FOREIGN KEY (health_seq) REFERENCES health(seq),
@@ -316,7 +316,7 @@ CREATE TABLE `adminAuth` (
 );
 
 CREATE TABLE `adminAuthList` (
-	`Key`	INT	AUTO_INCREMENT PRIMARY KEY,
+	`seq`	INT	AUTO_INCREMENT PRIMARY KEY,
 	`admin_seq`	INT	NOT NULL,
 	`adminAuth_seq`	INT	NOT NULL,
     FOREIGN KEY (admin_seq) REFERENCES admin(seq),

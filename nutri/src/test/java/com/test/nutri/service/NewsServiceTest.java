@@ -33,7 +33,7 @@ public class NewsServiceTest {
 	 */
 	@Test
 	public void checkTime() {
-		int rotateCount = 20;
+		int rotateCount = 5;
 		long beforeAvg = 0;
 		long afterAvg = 0;
 

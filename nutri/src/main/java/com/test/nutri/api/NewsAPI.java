@@ -92,7 +92,7 @@ public class NewsAPI {
      * @return {@link NewsListDTO} 객체에 매핑된 뉴스 목록.
      */
 	public NewsListDTO getNewsList(int start){
-		if(start < 1) {
+		if(start < 1 || start >= 10) {
 			return null;
 		}
 		
