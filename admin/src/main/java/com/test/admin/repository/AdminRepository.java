@@ -17,4 +17,6 @@ public interface AdminRepository extends BoardRepository<Admin>{
 
 	boolean existsByEmail(String email);
 
+	long count();
+
 }

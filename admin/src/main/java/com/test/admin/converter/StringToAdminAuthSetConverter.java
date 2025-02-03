@@ -1,5 +1,6 @@
 package com.test.admin.converter;
 
+import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -13,19 +14,18 @@ import com.test.admin.entity.AdminAuth;
 import com.test.admin.service.AdminAuthService;
 
 @Component
-public class StringSetToAdminAuthSetConverter implements Converter<Set<String>, Set<AdminAuth>>{
+public class StringToAdminAuthSetConverter implements Converter<String, Set<AdminAuth>>{
 
 	@Autowired
 	private AdminAuthService service;
 
 	@Override
 	@Nullable
-	public Set<AdminAuth> convert(@NonNull Set<String> source) {
-		
-		System.out.println("StringSetToAdminAuthSetConverter" + source);
-		
-        return source.stream()
-                .map(service::findByRole) // 변환 로직 유지
-                .collect(Collectors.toSet());
+	public Set<AdminAuth> convert(@NonNull String source) {
+        String[] roles = source.split(",");
+
+        return Arrays.stream(roles)
+                .map(service::findByRole)
+                .collect(Collectors.toSet());	
 	}
 }

@@ -8,9 +8,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.test.admin.converter.StringArrayToAdminAuthSetConverter;
-import com.test.admin.converter.StringSetToAdminAuthSetConverter;
-import com.test.admin.converter.StringToAdminAuthConverter;
+import com.test.admin.converter.StringToAdminAuthSetConverter;
 import com.test.admin.converter.StringToLocalDateTimeConverter;
 
 @Configuration
@@ -19,10 +17,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addFormatters(@NonNull FormatterRegistry registry) {
         registry.addConverter(new StringToLocalDateTimeConverter());
-        registry.addConverter(new StringToAdminAuthConverter());
-        registry.addConverter(new StringSetToAdminAuthSetConverter());
-//        registry.addConverter(new StringArrayToAdminAuthSetConverter());
-//        registry.addConverter(new StringToAdminRoleConverter());
+        registry.addConverter(new StringToAdminAuthSetConverter());
     }
 	
 	@Bean

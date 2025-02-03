@@ -158,7 +158,7 @@ $('.admin-datetimepicker').datetimepicker({
         X - 조회를 비활성화 시키면 모든 권한을 없애는 것이기 때문에 관리버튼을 비활성화하는 걸로 대체
 
         - 조회버튼이 아님
-        O - 모든 하위 버튼이 활성화 되면 올버튼 활성화 ( + 조회 버튼이 비활성화된 상태라면 trigger 시켜주기 ) ( + 모든 올 권한이 활성화 됐다면 name 지우기, 슈퍼 관리 활성화)
+        O - 조회 버튼이 비활성화된 상태라면 trigger 시킨 후 모든 하위 버튼이 활성화 되면 올버튼 활성화 ( + 모든 올 권한이 활성화 됐다면 name 지우기, 슈퍼 관리 활성화)
         X - 올버튼이 눌린 상태라면 trigger 시켜주기 ( + 슈퍼 관리가 활성화 상태라면 비활성화, 다른 올버튼 활성화)
 
         올 버튼
@@ -271,6 +271,12 @@ $('.admin-datetimepicker').datetimepicker({
             }
         } else {
             if (isChecked) {
+                const authRead = auths.find((auth) => auth.id.includes('Read'));
+
+                if (!authRead.checked) {
+                    triggerCheckboxChange(authRead, true);
+                }
+
                 const isCheckedAuths = auths.every((auth) => auth.checked);
 
                 if (isCheckedAuths) {
@@ -282,14 +288,6 @@ $('.admin-datetimepicker').datetimepicker({
 
                     if (isEveryAllChecked) {
                         superManage.checked = true;
-                    }
-                } else {
-                    const authRead = auths.find((auth) =>
-                        auth.id.includes('Read')
-                    );
-
-                    if (!authRead.checked) {
-                        triggerCheckboxChange(authRead, true);
                     }
                 }
             } else {
