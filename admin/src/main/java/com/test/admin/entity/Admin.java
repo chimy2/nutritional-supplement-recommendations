@@ -2,6 +2,7 @@ package com.test.admin.entity;
 
 import java.time.LocalDate;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import com.test.admin.board.Board;
 import com.test.admin.dto.AdminDTO;
@@ -52,7 +53,7 @@ public class Admin extends Board {
 				.name(this.name)
 				.birthDate(this.birthDate)
 				.email(this.email)
-				.auths(this.auths)
+				.auths(this.auths.stream().map(auth -> auth.getRole()).collect(Collectors.toSet()))
 				.build();
 	}
 }

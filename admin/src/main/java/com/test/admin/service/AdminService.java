@@ -20,11 +20,14 @@ public class AdminService extends BoardServiceImpl<Admin, AdminDTO> implements U
 	
 	private final AdminRepository repository;
 	
+	private final AdminAuthService adminAuthService;
+	
 	private final BCryptPasswordEncoder encoder;
 
-	public AdminService(AdminRepository repository, BCryptPasswordEncoder encoder) {
+	public AdminService(AdminRepository repository, AdminAuthService adminAuthService, BCryptPasswordEncoder encoder) {
 		super(repository);
 		this.repository = repository;
+		this.adminAuthService = adminAuthService;
 		this.encoder = encoder;
 	}
 	
@@ -51,8 +54,20 @@ public class AdminService extends BoardServiceImpl<Admin, AdminDTO> implements U
 	@Override
 	public AdminDTO create(AdminDTO dto) {
 		
-		System.out.println(dto);
 		dto.setPw(encoder.encode(dto.getPw()));
-		return super.create(dto);
+
+		return save(dto);
+	}
+	
+	@Override
+	public AdminDTO update(AdminDTO dto) {
+
+		return save(dto);
+	}
+	
+	private AdminDTO save(AdminDTO dto) {
+		
+	    Admin admin = dto.toEntity(adminAuthService::findByRole);
+	    return repository.save(admin).toDTO();
 	}
 }

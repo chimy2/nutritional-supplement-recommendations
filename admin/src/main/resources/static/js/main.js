@@ -77,8 +77,10 @@ $('.admin-datetimepicker').datetimepicker({
 
 /* admin verify */
 {
+    const pathname = location.pathname;
+
     /* admin id/email duplication check */
-    {
+    if (pathname.startsWith('/admin/write')) {
         const id = $('.input-admin-id');
         const email = $('.input-admin-email');
         const errorTextId = $('.input-admin-id-error');
@@ -142,6 +144,7 @@ $('.admin-datetimepicker').datetimepicker({
             }
         });
     }
+
     /* admin auth checkbox control */
     /* 
         슈퍼 관리 버튼
@@ -170,170 +173,179 @@ $('.admin-datetimepicker').datetimepicker({
         Why? name을 가지고 checked 값을 가진다면 서버에 전송되기 때문에
         같은 맥락으로 슈퍼 권한을 가진다면 ALL 권한의 name이 없어야 함
     */
-    const superManage = document.getElementById('btnSuperManage');
-    const noticeManage = document.getElementById('btnNoticeManage');
-    const nutriManage = document.getElementById('btnNutriManage');
-    const reviewManage = document.getElementById('btnReviewManage');
-    const adminManage = document.getElementById('btnAdminManage');
+    if (
+        pathname.startsWith('/admin/write') ||
+        pathname.startsWith('/admin/edit')
+    ) {
+        const superManage = document.getElementById('btnSuperManage');
+        const noticeManage = document.getElementById('btnNoticeManage');
+        const nutriManage = document.getElementById('btnNutriManage');
+        const reviewManage = document.getElementById('btnReviewManage');
+        const adminManage = document.getElementById('btnAdminManage');
 
-    const noticeAll = document.querySelector('.btn-check-notice-all');
-    const nutriAll = document.querySelector('.btn-check-nutri-all');
-    const reviewAll = document.querySelector('.btn-check-review-all');
-    const adminAll = document.querySelector('.btn-check-admin-all');
-    const everyAll = [noticeAll, nutriAll, reviewAll, adminAll];
+        const noticeAll = document.querySelector('.btn-check-notice-all');
+        const nutriAll = document.querySelector('.btn-check-nutri-all');
+        const reviewAll = document.querySelector('.btn-check-review-all');
+        const adminAll = document.querySelector('.btn-check-admin-all');
+        const everyAll = [noticeAll, nutriAll, reviewAll, adminAll];
 
-    const noticeAuths = document.querySelectorAll('.btn-check-notice');
-    const nutriAuths = document.querySelectorAll('.btn-check-nutri');
-    const reviewAuths = document.querySelectorAll('.btn-check-review');
-    const adminAuths = document.querySelectorAll('.btn-check-admin');
+        const noticeAuths = document.querySelectorAll('.btn-check-notice');
+        const nutriAuths = document.querySelectorAll('.btn-check-nutri');
+        const reviewAuths = document.querySelectorAll('.btn-check-review');
+        const adminAuths = document.querySelectorAll('.btn-check-admin');
 
-    superManage.addEventListener('change', controlSuperManageButton);
+        superManage.addEventListener('change', controlSuperManageButton);
 
-    noticeManage.addEventListener('change', controlManageButton);
-    nutriManage.addEventListener('change', controlManageButton);
-    reviewManage.addEventListener('change', controlManageButton);
-    adminManage.addEventListener('change', controlManageButton);
+        noticeManage.addEventListener('change', controlManageButton);
+        nutriManage.addEventListener('change', controlManageButton);
+        reviewManage.addEventListener('change', controlManageButton);
+        adminManage.addEventListener('change', controlManageButton);
 
-    noticeAuths.forEach((auth) =>
-        auth.addEventListener('change', controlAuthsButton)
-    );
-    nutriAuths.forEach((auth) =>
-        auth.addEventListener('change', controlAuthsButton)
-    );
-    reviewAuths.forEach((auth) =>
-        auth.addEventListener('change', controlAuthsButton)
-    );
-    adminAuths.forEach((auth) =>
-        auth.addEventListener('change', controlAuthsButton)
-    );
+        noticeAuths.forEach((auth) =>
+            auth.addEventListener('change', controlAuthsButton)
+        );
+        nutriAuths.forEach((auth) =>
+            auth.addEventListener('change', controlAuthsButton)
+        );
+        reviewAuths.forEach((auth) =>
+            auth.addEventListener('change', controlAuthsButton)
+        );
+        adminAuths.forEach((auth) =>
+            auth.addEventListener('change', controlAuthsButton)
+        );
 
-    noticeAll.addEventListener('change', toggleAuthsName);
-    nutriAll.addEventListener('change', toggleAuthsName);
-    reviewAll.addEventListener('change', toggleAuthsName);
-    adminAll.addEventListener('change', toggleAuthsName);
+        noticeAll.addEventListener('change', toggleAuthsName);
+        nutriAll.addEventListener('change', toggleAuthsName);
+        reviewAll.addEventListener('change', toggleAuthsName);
+        adminAll.addEventListener('change', toggleAuthsName);
 
-    function controlSuperManageButton() {
-        const isChecked = this.checked;
+        function controlSuperManageButton() {
+            const isChecked = this.checked;
 
-        triggerCheckboxChange(noticeManage, isChecked);
-        triggerCheckboxChange(nutriManage, isChecked);
-        triggerCheckboxChange(reviewManage, isChecked);
-        triggerCheckboxChange(adminManage, isChecked);
-    }
-
-    function controlManageButton() {
-        const isChecked = this.checked;
-        const className = this.id.replace(/btn|Manage/g, '').toLowerCase();
-        const all = document.querySelector(`.btn-check-${className}-all`);
-        const auths = document.querySelectorAll(`.btn-check-${className}`);
-
-        superManage.checked = false;
-        triggerCheckboxChange(all, isChecked);
-
-        auths.forEach((auth) => {
-            if (isChecked) {
-                auth.checked = true;
-            } else {
-                auth.checked = false;
-            }
-        });
-
-        if (
-            noticeManage.checked &&
-            nutriManage.checked &&
-            reviewManage.checked &&
-            adminManage.checked
-        ) {
-            superManage.checked = true;
+            triggerCheckboxChange(noticeManage, isChecked);
+            triggerCheckboxChange(nutriManage, isChecked);
+            triggerCheckboxChange(reviewManage, isChecked);
+            triggerCheckboxChange(adminManage, isChecked);
         }
-    }
 
-    function controlAuthsButton() {
-        const isChecked = this.checked;
-        const isRead = this.id.includes('Read');
-        const originalClassName = this.id.replace(
-            /btn|Read|Create|Update|Delete/g,
-            ''
-        );
-        const className = originalClassName.toLowerCase();
-        const manage = document.getElementById(`btn${originalClassName}Manage`);
-        const all = document.querySelector(`.btn-check-${className}-all`);
-        const auths = Array.from(
-            document.querySelectorAll(`.btn-check-${className}`)
-        );
+        function controlManageButton() {
+            const isChecked = this.checked;
+            const className = this.id.replace(/btn|Manage/g, '').toLowerCase();
+            const all = document.querySelector(`.btn-check-${className}-all`);
+            const auths = document.querySelectorAll(`.btn-check-${className}`);
 
-        if (isRead) {
-            if (isChecked && !manage.checked) {
-                triggerCheckboxChange(all, false);
-                manage.checked = true;
-            } else {
-                triggerCheckboxChange(manage, false);
-            }
-        } else {
-            if (isChecked) {
-                const authRead = auths.find((auth) => auth.id.includes('Read'));
+            superManage.checked = false;
+            triggerCheckboxChange(all, isChecked);
 
-                if (!authRead.checked) {
-                    triggerCheckboxChange(authRead, true);
+            auths.forEach((auth) => {
+                if (isChecked) {
+                    auth.checked = true;
+                } else {
+                    auth.checked = false;
                 }
+            });
 
-                const isCheckedAuths = auths.every((auth) => auth.checked);
+            if (
+                noticeManage.checked &&
+                nutriManage.checked &&
+                reviewManage.checked &&
+                adminManage.checked
+            ) {
+                superManage.checked = true;
+            }
+        }
 
-                if (isCheckedAuths) {
-                    triggerCheckboxChange(all, true);
+        function controlAuthsButton() {
+            const isChecked = this.checked;
+            const isRead = this.id.includes('Read');
+            const originalClassName = this.id.replace(
+                /btn|Read|Create|Update|Delete/g,
+                ''
+            );
+            const className = originalClassName.toLowerCase();
+            const manage = document.getElementById(
+                `btn${originalClassName}Manage`
+            );
+            const all = document.querySelector(`.btn-check-${className}-all`);
+            const auths = Array.from(
+                document.querySelectorAll(`.btn-check-${className}`)
+            );
 
-                    const isEveryAllChecked = everyAll.every(
-                        (all) => all.checked
+            if (isRead) {
+                if (isChecked && !manage.checked) {
+                    triggerCheckboxChange(all, false);
+                    manage.checked = true;
+                } else {
+                    triggerCheckboxChange(manage, false);
+                }
+            } else {
+                if (isChecked) {
+                    const authRead = auths.find((auth) =>
+                        auth.id.includes('Read')
                     );
 
-                    if (isEveryAllChecked) {
-                        superManage.checked = true;
+                    if (!authRead.checked) {
+                        triggerCheckboxChange(authRead, true);
+                    }
+
+                    const isCheckedAuths = auths.every((auth) => auth.checked);
+
+                    if (isCheckedAuths) {
+                        triggerCheckboxChange(all, true);
+
+                        const isEveryAllChecked = everyAll.every(
+                            (all) => all.checked
+                        );
+
+                        if (isEveryAllChecked) {
+                            superManage.checked = true;
+                        }
+                    }
+                } else {
+                    if (all.checked) {
+                        triggerCheckboxChange(all, false);
+                    }
+                    if (superManage.checked) {
+                        superManage.checked = false;
+                        everyAll.forEach((allCheck) => {
+                            if (allCheck != all) {
+                                triggerCheckboxChange(allCheck, true);
+                            }
+                        });
                     }
                 }
-            } else {
-                if (all.checked) {
-                    triggerCheckboxChange(all, false);
-                }
-                if (superManage.checked) {
-                    superManage.checked = false;
-                    everyAll.forEach((allCheck) => {
-                        if (allCheck != all) {
-                            triggerCheckboxChange(allCheck, true);
-                        }
-                    });
-                }
             }
         }
-    }
 
-    function toggleAuthsName() {
-        const isChecked = this.checked;
-        const className = this.dataset.target;
-        const elements = document.querySelectorAll(`.${className}`);
+        function toggleAuthsName() {
+            const isChecked = this.checked;
+            const className = this.dataset.target;
+            const elements = document.querySelectorAll(`.${className}`);
 
-        if (isChecked) {
-            this.name = 'auths';
-        } else {
-            this.name = '';
-        }
-
-        elements.forEach((element) => {
-            if (!isChecked) {
-                element.name = 'auths';
+            if (isChecked) {
+                this.name = 'auths';
             } else {
-                element.name = '';
+                this.name = '';
             }
-        });
 
-        if (everyAll.every((all) => all.checked)) {
-            everyAll.forEach((all) => {
-                all.name = '';
+            elements.forEach((element) => {
+                if (!isChecked) {
+                    element.name = 'auths';
+                } else {
+                    element.name = '';
+                }
             });
-        }
-    }
 
-    function triggerCheckboxChange(checkbox, isChecked) {
-        checkbox.checked = isChecked;
-        checkbox.dispatchEvent(new Event('change'));
+            if (everyAll.every((all) => all.checked)) {
+                everyAll.forEach((all) => {
+                    all.name = '';
+                });
+            }
+        }
+
+        function triggerCheckboxChange(checkbox, isChecked) {
+            checkbox.checked = isChecked;
+            checkbox.dispatchEvent(new Event('change'));
+        }
     }
 }
