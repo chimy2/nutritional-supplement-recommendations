@@ -78,6 +78,7 @@ $('.admin-datetimepicker').datetimepicker({
 /* admin verify */
 {
     const pathname = location.pathname;
+    const reg = /^\/admin\/\d+\/edit(\?\D*)?$/;
 
     /* admin id/email duplication check */
     if (pathname.startsWith('/admin/write')) {
@@ -173,10 +174,7 @@ $('.admin-datetimepicker').datetimepicker({
         Why? name을 가지고 checked 값을 가진다면 서버에 전송되기 때문에
         같은 맥락으로 슈퍼 권한을 가진다면 ALL 권한의 name이 없어야 함
     */
-    if (
-        pathname.startsWith('/admin/write') ||
-        pathname.startsWith('/admin/edit')
-    ) {
+    if (pathname.startsWith('/admin/write') || reg.test(pathname)) {
         const superManage = document.getElementById('btnSuperManage');
         const noticeManage = document.getElementById('btnNoticeManage');
         const nutriManage = document.getElementById('btnNutriManage');
@@ -229,10 +227,11 @@ $('.admin-datetimepicker').datetimepicker({
         }
 
         function controlManageButton() {
+            const isSuperChcked = superManage.checked;
             const isChecked = this.checked;
-            const className = this.id.replace(/btn|Manage/g, '').toLowerCase();
-            const all = document.querySelector(`.btn-check-${className}-all`);
-            const auths = document.querySelectorAll(`.btn-check-${className}`);
+            const type = this.id.replace(/btn|Manage/g, '').toLowerCase();
+            const all = document.querySelector(`.btn-check-${type}-all`);
+            const auths = document.querySelectorAll(`.btn-check-${type}`);
 
             superManage.checked = false;
             triggerCheckboxChange(all, isChecked);
@@ -244,6 +243,21 @@ $('.admin-datetimepicker').datetimepicker({
                     auth.checked = false;
                 }
             });
+
+            if (!isChecked && isSuperChcked) {
+                const authManages = [
+                    noticeManage,
+                    nutriManage,
+                    reviewManage,
+                    adminManage,
+                ];
+
+                authManages.forEach((manage) => {
+                    if (this != manage) {
+                        triggerCheckboxChange(manage, true);
+                    }
+                });
+            }
 
             if (
                 noticeManage.checked &&
@@ -258,23 +272,23 @@ $('.admin-datetimepicker').datetimepicker({
         function controlAuthsButton() {
             const isChecked = this.checked;
             const isRead = this.id.includes('Read');
-            const originalClassName = this.id.replace(
+            const originalType = this.id.replace(
                 /btn|Read|Create|Update|Delete/g,
                 ''
             );
-            const className = originalClassName.toLowerCase();
-            const manage = document.getElementById(
-                `btn${originalClassName}Manage`
-            );
-            const all = document.querySelector(`.btn-check-${className}-all`);
+            const type = originalType.toLowerCase();
+            const manage = document.getElementById(`btn${originalType}Manage`);
+            const all = document.querySelector(`.btn-check-${type}-all`);
             const auths = Array.from(
-                document.querySelectorAll(`.btn-check-${className}`)
+                document.querySelectorAll(`.btn-check-${type}`)
             );
 
             if (isRead) {
-                if (isChecked && !manage.checked) {
-                    triggerCheckboxChange(all, false);
-                    manage.checked = true;
+                if (isChecked) {
+                    if (!manage.checked) {
+                        triggerCheckboxChange(all, false);
+                        manage.checked = true;
+                    }
                 } else {
                     triggerCheckboxChange(manage, false);
                 }
@@ -319,8 +333,8 @@ $('.admin-datetimepicker').datetimepicker({
 
         function toggleAuthsName() {
             const isChecked = this.checked;
-            const className = this.dataset.target;
-            const elements = document.querySelectorAll(`.${className}`);
+            const target = this.dataset.target;
+            const elements = document.querySelectorAll(`.${target}`);
 
             if (isChecked) {
                 this.name = 'auths';
@@ -346,6 +360,37 @@ $('.admin-datetimepicker').datetimepicker({
         function triggerCheckboxChange(checkbox, isChecked) {
             checkbox.checked = isChecked;
             checkbox.dispatchEvent(new Event('change'));
+        }
+
+        if (reg.test(pathname)) {
+            const auths = strBoardAuths
+                .substring(1, strBoardAuths.length - 1)
+                .split(',')
+                .map((auth) => auth.trim());
+
+            const reg = /(?<=ROLE_)[^_]+/;
+
+            auths.forEach((auth) => {
+                if (auth === '') return;
+
+                const checkbox = document.querySelector(
+                    `input[value="${auth}"]`
+                );
+                const type = reg.exec(auth)[0];
+                const originalType = type[0] + type.slice(1).toLowerCase();
+
+                if (auth.endsWith('ALL')) {
+                    const manage = document.getElementById(
+                        `btn${originalType}Manage`
+                    );
+
+                    triggerCheckboxChange(manage, true);
+                } else if (auth.endsWith('SUPER')) {
+                    triggerCheckboxChange(superManage, true);
+                } else {
+                    triggerCheckboxChange(checkbox, true);
+                }
+            });
         }
     }
 }

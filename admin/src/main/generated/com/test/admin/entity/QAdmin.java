@@ -7,6 +7,7 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
+import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
@@ -20,6 +21,8 @@ public class QAdmin extends EntityPathBase<Admin> {
     public static final QAdmin admin = new QAdmin("admin");
 
     public final com.test.admin.board.QBoard _super = new com.test.admin.board.QBoard(this);
+
+    public final SetPath<AdminAuth, QAdminAuth> auths = this.<AdminAuth, QAdminAuth>createSet("auths", AdminAuth.class, QAdminAuth.class, PathInits.DIRECT2);
 
     public final DatePath<java.time.LocalDate> birthDate = createDate("birthDate", java.time.LocalDate.class);
 

@@ -15,12 +15,10 @@ public class AdminAuthService {
 	private final AdminAuthRepository repository;
 	
 	public AdminAuth findByRole(String role) {
-		System.out.println("public AdminAuth findByRole(String role) {");
 		return findByRole(AdminRole.valueOf(role));
 	}
 	
 	public AdminAuth findByRole(AdminRole role) {
-		System.out.println("public AdminAuth findByRole(AdminRole role) {");
 		return repository.findByRole(role);
 	}
 }

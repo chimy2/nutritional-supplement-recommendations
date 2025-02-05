@@ -20,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 public abstract class BoardController<D extends BoardDTO> {
 
 	private final BoardServiceImpl<? extends Board, D> service;
-	private final String PATH;
+	public final String PATH;
 	
 //	목록
 	@GetMapping

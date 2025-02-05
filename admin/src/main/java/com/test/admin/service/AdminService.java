@@ -70,4 +70,13 @@ public class AdminService extends BoardServiceImpl<Admin, AdminDTO> implements U
 	    Admin admin = dto.toEntity(adminAuthService::findByRole);
 	    return repository.save(admin).toDTO();
 	}
+
+	public void updateAuths(Long seq, AdminDTO dto) {
+		
+		AdminDTO result = get(seq).get();
+		
+		result.setAuths(dto.getAuths());
+		
+		save(result);
+	}
 }

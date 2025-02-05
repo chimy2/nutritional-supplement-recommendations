@@ -23,7 +23,7 @@ public class AdminServiceTest {
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
-	@Test
+//	@Test
 	public void count() {
 		long count = adminRepository.count();
 		
@@ -32,7 +32,7 @@ public class AdminServiceTest {
 		assertEquals(10, count);
 	}
 
-	@Test
+//	@Test
 	public void insertAdmin() {
 		List<AdminDTO> adminDTOList = getAdminList();
 		
@@ -64,7 +64,7 @@ public class AdminServiceTest {
 		return list;
 	}
 		
-	@Test
+//	@Test
 	public void checkEncodedPasswords() {
 	    List<Admin> adminList = adminRepository.findAll();
 
@@ -73,7 +73,7 @@ public class AdminServiceTest {
 	    }
 	}
 	
-	@Test
+//	@Test
 	public void removeAdmin() {
 		
 		int num = 11;

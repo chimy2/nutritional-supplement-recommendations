@@ -13,7 +13,7 @@
                 <div class="container-fluid pt-4 px-4">
                     <div class="bg-secondary rounded h-100 p-4">
                         <th:block th:object="${board}">
-                            <table class="table table-striped">
+                            <table class="table table-striped mb-0">
                                 <tbody>
                                     <tr class="h-px-70">
                                         <th
@@ -54,6 +54,10 @@
                                             [[*{email}]]
                                         </td>
                                     </tr>
+                                </tbody>
+                            </table>
+                            <table class="table table-striped">
+                                <tbody>
                                     <tr>
                                         <th
                                             scope="row"
@@ -66,7 +70,7 @@
                                             class="text-center align-middle">
                                             슈퍼 관리자
                                         </td>
-                                        <td class="align-middle">
+                                        <td class="text-center align-middle">
                                             <button
                                                 type="button"
                                                 class="btn m-2 px-3"
@@ -82,37 +86,37 @@
                                             class="text-center align-middle">
                                             공지사항
                                         </th>
-                                        <td class="align-middle">
+                                        <td class="text-center align-middle">
                                             <button
                                                 type="button"
                                                 class="btn m-2 px-3"
-                                                th:classappend="${@AdminRoleProvider.hasRole(board.auths, 'NOTICE')} ? 'btn-primary' : 'btn-outline-primary'">
+                                                th:classappend="${board.auths.contains(@AdminRoleProvider.get('super')) || @AdminRoleProvider.hasRole(board.auths, 'NOTICE')} ? 'btn-primary' : 'btn-outline-primary'">
                                                 관리
                                             </button>
                                         </td>
-                                        <td class="align-middle">
+                                        <td class="text-center align-middle">
                                             <button
                                                 type="button"
                                                 class="btn m-2 px-3"
-                                                th:classappend="${board.auths.contains(@AdminRoleProvider.get('noticeAll')) || board.auths.contains(@AdminRoleProvider.get('noticeRead'))} ? 'btn-primary' : 'btn-outline-primary'">
+                                                th:classappend="${board.auths.contains(@AdminRoleProvider.get('super')) || board.auths.contains(@AdminRoleProvider.get('noticeAll')) || board.auths.contains(@AdminRoleProvider.get('noticeRead'))} ? 'btn-primary' : 'btn-outline-primary'">
                                                 조회
                                             </button>
                                             <button
                                                 type="button"
                                                 class="btn m-2 px-3"
-                                                th:classappend="${board.auths.contains(@AdminRoleProvider.get('noticeAll')) || board.auths.contains(@AdminRoleProvider.get('noticeCreate'))} ? 'btn-primary' : 'btn-outline-primary'">
+                                                th:classappend="${board.auths.contains(@AdminRoleProvider.get('super')) || board.auths.contains(@AdminRoleProvider.get('noticeAll')) || board.auths.contains(@AdminRoleProvider.get('noticeCreate'))} ? 'btn-primary' : 'btn-outline-primary'">
                                                 생성
                                             </button>
                                             <button
                                                 type="button"
                                                 class="btn m-2 px-3"
-                                                th:classappend="${board.auths.contains(@AdminRoleProvider.get('noticeAll')) || board.auths.contains(@AdminRoleProvider.get('noticeUpdate'))} ? 'btn-primary' : 'btn-outline-primary'">
+                                                th:classappend="${board.auths.contains(@AdminRoleProvider.get('super')) || board.auths.contains(@AdminRoleProvider.get('noticeAll')) || board.auths.contains(@AdminRoleProvider.get('noticeUpdate'))} ? 'btn-primary' : 'btn-outline-primary'">
                                                 수정
                                             </button>
                                             <button
                                                 type="button"
                                                 class="btn m-2 px-3"
-                                                th:classappend="${board.auths.contains(@AdminRoleProvider.get('noticeAll')) || board.auths.contains(@AdminRoleProvider.get('noticeDelete'))} ? 'btn-primary' : 'btn-outline-primary'">
+                                                th:classappend="${board.auths.contains(@AdminRoleProvider.get('super')) || board.auths.contains(@AdminRoleProvider.get('noticeAll')) || board.auths.contains(@AdminRoleProvider.get('noticeDelete'))} ? 'btn-primary' : 'btn-outline-primary'">
                                                 삭제
                                             </button>
                                         </td>
@@ -123,37 +127,37 @@
                                             class="text-center align-middle">
                                             영양제
                                         </th>
-                                        <td class="align-middle">
+                                        <td class="text-center align-middle">
                                             <button
                                                 type="button"
                                                 class="btn m-2 px-3"
-                                                th:classappend="${@AdminRoleProvider.hasRole(board.auths, 'NUTRI')} ? 'btn-primary' : 'btn-outline-primary'">
+                                                th:classappend="${board.auths.contains(@AdminRoleProvider.get('super')) || @AdminRoleProvider.hasRole(board.auths, 'NUTRI')} ? 'btn-primary' : 'btn-outline-primary'">
                                                 관리
                                             </button>
                                         </td>
-                                        <td class="align-middle">
+                                        <td class="text-center align-middle">
                                             <button
                                                 type="button"
                                                 class="btn m-2 px-3"
-                                                th:classappend="${board.auths.contains(@AdminRoleProvider.get('nutriAll')) || board.auths.contains(@AdminRoleProvider.get('nutriRead'))} ? 'btn-primary' : 'btn-outline-primary'">
+                                                th:classappend="${board.auths.contains(@AdminRoleProvider.get('super')) || board.auths.contains(@AdminRoleProvider.get('nutriAll')) || board.auths.contains(@AdminRoleProvider.get('nutriRead'))} ? 'btn-primary' : 'btn-outline-primary'">
                                                 조회
                                             </button>
                                             <button
                                                 type="button"
                                                 class="btn m-2 px-3"
-                                                th:classappend="${board.auths.contains(@AdminRoleProvider.get('nutriAll')) || board.auths.contains(@AdminRoleProvider.get('nutriCreate'))} ? 'btn-primary' : 'btn-outline-primary'">
+                                                th:classappend="${board.auths.contains(@AdminRoleProvider.get('super')) || board.auths.contains(@AdminRoleProvider.get('nutriAll')) || board.auths.contains(@AdminRoleProvider.get('nutriCreate'))} ? 'btn-primary' : 'btn-outline-primary'">
                                                 생성
                                             </button>
                                             <button
                                                 type="button"
                                                 class="btn m-2 px-3"
-                                                th:classappend="${board.auths.contains(@AdminRoleProvider.get('nutriAll')) || board.auths.contains(@AdminRoleProvider.get('nutriUpdate'))} ? 'btn-primary' : 'btn-outline-primary'">
+                                                th:classappend="${board.auths.contains(@AdminRoleProvider.get('super')) || board.auths.contains(@AdminRoleProvider.get('nutriAll')) || board.auths.contains(@AdminRoleProvider.get('nutriUpdate'))} ? 'btn-primary' : 'btn-outline-primary'">
                                                 수정
                                             </button>
                                             <button
                                                 type="button"
                                                 class="btn m-2 px-3"
-                                                th:classappend="${board.auths.contains(@AdminRoleProvider.get('nutriAll')) || board.auths.contains(@AdminRoleProvider.get('nutriDelete'))} ? 'btn-primary' : 'btn-outline-primary'">
+                                                th:classappend="${board.auths.contains(@AdminRoleProvider.get('super')) || board.auths.contains(@AdminRoleProvider.get('nutriAll')) || board.auths.contains(@AdminRoleProvider.get('nutriDelete'))} ? 'btn-primary' : 'btn-outline-primary'">
                                                 삭제
                                             </button>
                                         </td>
@@ -164,37 +168,25 @@
                                             class="text-center align-middle">
                                             리뷰
                                         </th>
-                                        <td class="align-middle">
+                                        <td class="text-center align-middle">
                                             <button
                                                 type="button"
                                                 class="btn m-2 px-3"
-                                                th:classappend="${@AdminRoleProvider.hasRole(board.auths, 'REVIEW')} ? 'btn-primary' : 'btn-outline-primary'">
+                                                th:classappend="${board.auths.contains(@AdminRoleProvider.get('super')) || @AdminRoleProvider.hasRole(board.auths, 'REVIEW')} ? 'btn-primary' : 'btn-outline-primary'">
                                                 관리
                                             </button>
                                         </td>
-                                        <td class="align-middle">
+                                        <td class="text-center align-middle">
                                             <button
                                                 type="button"
                                                 class="btn m-2 px-3"
-                                                th:classappend="${board.auths.contains(@AdminRoleProvider.get('reviewAll')) || board.auths.contains(@AdminRoleProvider.get('reviewRead'))} ? 'btn-primary' : 'btn-outline-primary'">
+                                                th:classappend="${board.auths.contains(@AdminRoleProvider.get('super')) || board.auths.contains(@AdminRoleProvider.get('reviewAll')) || board.auths.contains(@AdminRoleProvider.get('reviewRead'))} ? 'btn-primary' : 'btn-outline-primary'">
                                                 조회
                                             </button>
                                             <button
                                                 type="button"
                                                 class="btn m-2 px-3"
-                                                th:classappend="${board.auths.contains(@AdminRoleProvider.get('reviewAll')) || board.auths.contains(@AdminRoleProvider.get('reviewCreate'))} ? 'btn-primary' : 'btn-outline-primary'">
-                                                생성
-                                            </button>
-                                            <button
-                                                type="button"
-                                                class="btn m-2 px-3"
-                                                th:classappend="${board.auths.contains(@AdminRoleProvider.get('reviewAll')) || board.auths.contains(@AdminRoleProvider.get('reviewUpdate'))} ? 'btn-primary' : 'btn-outline-primary'">
-                                                수정
-                                            </button>
-                                            <button
-                                                type="button"
-                                                class="btn m-2 px-3"
-                                                th:classappend="${board.auths.contains(@AdminRoleProvider.get('reviewAll')) || board.auths.contains(@AdminRoleProvider.get('reviewDelete'))} ? 'btn-primary' : 'btn-outline-primary'">
+                                                th:classappend="${board.auths.contains(@AdminRoleProvider.get('super')) || board.auths.contains(@AdminRoleProvider.get('reviewAll')) || board.auths.contains(@AdminRoleProvider.get('reviewDelete'))} ? 'btn-primary' : 'btn-outline-primary'">
                                                 삭제
                                             </button>
                                         </td>
@@ -205,37 +197,37 @@
                                             class="text-center align-middle">
                                             관리자
                                         </th>
-                                        <td class="align-middle">
+                                        <td class="text-center align-middle">
                                             <button
                                                 type="button"
                                                 class="btn m-2 px-3"
-                                                th:classappend="${@AdminRoleProvider.hasRole(board.auths, 'ADMIN')} ? 'btn-primary' : 'btn-outline-primary'">
+                                                th:classappend="${board.auths.contains(@AdminRoleProvider.get('super')) || @AdminRoleProvider.hasRole(board.auths, 'ADMIN')} ? 'btn-primary' : 'btn-outline-primary'">
                                                 관리
                                             </button>
                                         </td>
-                                        <td class="align-middle">
+                                        <td class="text-center align-middle">
                                             <button
                                                 type="button"
                                                 class="btn m-2 px-3"
-                                                th:classappend="${board.auths.contains(@AdminRoleProvider.get('adminAll')) || board.auths.contains(@AdminRoleProvider.get('adminRead'))} ? 'btn-primary' : 'btn-outline-primary'">
+                                                th:classappend="${board.auths.contains(@AdminRoleProvider.get('super')) || board.auths.contains(@AdminRoleProvider.get('adminAll')) || board.auths.contains(@AdminRoleProvider.get('adminRead'))} ? 'btn-primary' : 'btn-outline-primary'">
                                                 조회
                                             </button>
                                             <button
                                                 type="button"
                                                 class="btn m-2 px-3"
-                                                th:classappend="${board.auths.contains(@AdminRoleProvider.get('adminAll')) || board.auths.contains(@AdminRoleProvider.get('adminCreate'))} ? 'btn-primary' : 'btn-outline-primary'">
+                                                th:classappend="${board.auths.contains(@AdminRoleProvider.get('super')) || board.auths.contains(@AdminRoleProvider.get('adminAll')) || board.auths.contains(@AdminRoleProvider.get('adminCreate'))} ? 'btn-primary' : 'btn-outline-primary'">
                                                 생성
                                             </button>
                                             <button
                                                 type="button"
                                                 class="btn m-2 px-3"
-                                                th:classappend="${board.auths.contains(@AdminRoleProvider.get('adminAll')) || board.auths.contains(@AdminRoleProvider.get('adminUpdate'))} ? 'btn-primary' : 'btn-outline-primary'">
+                                                th:classappend="${board.auths.contains(@AdminRoleProvider.get('super')) || board.auths.contains(@AdminRoleProvider.get('adminAll')) || board.auths.contains(@AdminRoleProvider.get('adminUpdate'))} ? 'btn-primary' : 'btn-outline-primary'">
                                                 수정
                                             </button>
                                             <button
                                                 type="button"
                                                 class="btn m-2 px-3"
-                                                th:classappend="${board.auths.contains(@AdminRoleProvider.get('adminAll')) || board.auths.contains(@AdminRoleProvider.get('adminDelete'))} ? 'btn-primary' : 'btn-outline-primary'">
+                                                th:classappend="${board.auths.contains(@AdminRoleProvider.get('super')) || board.auths.contains(@AdminRoleProvider.get('adminAll')) || board.auths.contains(@AdminRoleProvider.get('adminDelete'))} ? 'btn-primary' : 'btn-outline-primary'">
                                                 삭제
                                             </button>
                                         </td>

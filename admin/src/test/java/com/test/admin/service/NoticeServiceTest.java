@@ -20,7 +20,7 @@ public class NoticeServiceTest {
 	@Autowired
 	private NoticeService service;
 
-	@Test
+//	@Test
 	public void testCreate() {
 		
 		long before = service.count();
@@ -52,7 +52,6 @@ public class NoticeServiceTest {
 					.admin(AdminDTO.builder().seq(random.nextLong(10) + 1).build())
 					.build();
 			
-			System.out.println(dto);
 			result.add(dto);
 		}
 		

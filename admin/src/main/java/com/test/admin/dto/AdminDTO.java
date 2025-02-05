@@ -40,16 +40,19 @@ public class AdminDTO extends BoardDTO<Admin> {
 	}
 	
 	public Admin toEntity(Function<AdminRole, AdminAuth> authResolver) {
+		
+		System.out.println("hello" + this);
+		
         return Admin.builder()
                 .seq(this.seq)
                 .id(this.id)
                 .pw(this.pw)
                 .name(this.name)
                 .birthDate(this.birthDate)
-                .email(this.email)
-                .auths(this.auths.stream()
-                        .map(authResolver)
-                        .collect(Collectors.toSet()))
+				.email(this.email)
+				.auths(this.auths != null ? 
+						this.auths.stream().map(authResolver).collect(Collectors.toSet()) 
+						: null)
                 .build();
     }
 

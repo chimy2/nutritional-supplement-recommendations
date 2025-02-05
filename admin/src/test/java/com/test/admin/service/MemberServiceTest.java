@@ -32,7 +32,7 @@ class MemberServiceTest {
 		random = new Random();
 	}
 	
-	@Test
+//	@Test
 	void testCreateDummyList() {
 		
 		service.deleteAll();

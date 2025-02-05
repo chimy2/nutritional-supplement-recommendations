@@ -53,7 +53,9 @@ public class Admin extends Board {
 				.name(this.name)
 				.birthDate(this.birthDate)
 				.email(this.email)
-				.auths(this.auths.stream().map(auth -> auth.getRole()).collect(Collectors.toSet()))
+				.auths(this.auths != null ? 
+						this.auths.stream().map(auth -> auth.getRole()).collect(Collectors.toSet())
+						: null)
 				.build();
 	}
 }
