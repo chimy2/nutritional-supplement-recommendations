@@ -25,6 +25,7 @@ public abstract class BoardController<D extends BoardDTO> {
 //	목록
 	@GetMapping
 	public String getList(Model model, @RequestParam(name = "page", defaultValue = "1", required = false) int page) {
+		
 		int size = 10;
 		
 		model.addAttribute("list", service.getList(page, size));
@@ -64,11 +65,8 @@ public abstract class BoardController<D extends BoardDTO> {
 	@PostMapping
 	public String post(Model model, @ModelAttribute D dto) {
 
-		System.out.println(dto);
 		D result = service.create(dto);
 		
-		System.out.println(dto);
-
 		return PathHelper.redirectDetailPath(PATH, result.getSeq());
 	}
 	
@@ -88,7 +86,9 @@ public abstract class BoardController<D extends BoardDTO> {
 //	삭제하기
 	@DeleteMapping("/{seq}")
 	public String delete(Model model, @PathVariable("seq") Long seq) {
+		
 		service.delete(seq);
+		
 		return PathHelper.redirectListPath(PATH);
 	}
 }

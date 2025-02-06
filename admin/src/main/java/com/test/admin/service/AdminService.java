@@ -1,5 +1,10 @@
 package com.test.admin.service;
 
+import java.beans.Transient;
+import java.util.function.Function;
+
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -7,12 +12,15 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.test.admin.auth.AdminDetails;
+import com.test.admin.auth.AdminRole;
 import com.test.admin.board.BoardRepository;
 import com.test.admin.board.BoardServiceImpl;
 import com.test.admin.dto.AdminDTO;
 import com.test.admin.entity.Admin;
+import com.test.admin.entity.AdminAuth;
 import com.test.admin.repository.AdminRepository;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -32,15 +40,12 @@ public class AdminService extends BoardServiceImpl<Admin, AdminDTO> implements U
 	}
 	
 	@Override
+	@Transactional
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		
-		Admin admin = repository.findById(username);
+		Admin entity = repository.findById(username);
 
-		if (admin != null) {
-			return new AdminDetails(admin);
-		}
-		
-		return null;
+		return entity != null ? new AdminDetails(entity.toDTO()) : null;
 	}
 
 	public boolean existsById(String id) {
@@ -67,7 +72,7 @@ public class AdminService extends BoardServiceImpl<Admin, AdminDTO> implements U
 	
 	private AdminDTO save(AdminDTO dto) {
 		
-	    Admin admin = dto.toEntity(adminAuthService::findByRole);
+	    Admin admin = dto.toEntity(getAuthResolver());
 	    return repository.save(admin).toDTO();
 	}
 
@@ -78,5 +83,20 @@ public class AdminService extends BoardServiceImpl<Admin, AdminDTO> implements U
 		result.setAuths(dto.getAuths());
 		
 		save(result);
+	}
+	
+	public Function<AdminRole, AdminAuth> getAuthResolver() {
+	    return adminAuthService::findByRole;
+	}
+	
+	public AdminDTO getCurrentAdmin() {
+		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+		AdminDetails principal = (AdminDetails) authentication.getPrincipal();
+
+		AdminDTO dto = get(principal.getSeq()).orElse(null);
+
+		return dto;
 	}
 }

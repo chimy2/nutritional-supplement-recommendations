@@ -3,9 +3,9 @@ package com.test.admin.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.test.admin.board.BoardController;
@@ -15,8 +15,6 @@ import com.test.admin.service.NoticeService;
 import com.test.admin.util.PathHelper;
 
 import jakarta.transaction.Transactional;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 
 @Controller
@@ -41,12 +39,6 @@ public class AdminController extends BoardController<AdminDTO> {
 		noticeService.deleteAdminNoticeList(seq);
 
 		return super.delete(model, seq);
-	}
-	
-	@Override
-	public String put(Model model, Long seq, AdminDTO dto) {
-		// TODO Auto-generated method stub
-		return super.put(model, seq, dto);
 	}
 
 	@PutMapping("/{seq}/auths")

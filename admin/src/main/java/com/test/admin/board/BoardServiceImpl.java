@@ -30,16 +30,20 @@ public class BoardServiceImpl<T extends Board, D extends BoardDTO> implements Bo
 
 	@Override
 	public D create(D dto) {
-		return (D) repository.save((T) dto.toEntity()).toDTO();
+		return save(dto);
 	}
 
 	@Override
 	public D update(D dto) {
-		return (D) repository.save((T) dto.toEntity()).toDTO();
+		return save(dto);
 	}
 
 	@Override
 	public void delete(Long seq) {
 		repository.deleteById(seq);
+	}
+
+	private D save(D dto) {
+		return (D) repository.save((T) dto.toEntity()).toDTO();
 	}
 }

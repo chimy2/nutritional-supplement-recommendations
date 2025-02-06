@@ -41,8 +41,6 @@ public class AdminDTO extends BoardDTO<Admin> {
 	
 	public Admin toEntity(Function<AdminRole, AdminAuth> authResolver) {
 		
-		System.out.println("hello" + this);
-		
         return Admin.builder()
                 .seq(this.seq)
                 .id(this.id)

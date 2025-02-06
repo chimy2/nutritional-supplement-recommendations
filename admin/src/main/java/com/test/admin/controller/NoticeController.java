@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.test.admin.board.BoardController;
 import com.test.admin.dto.NoticeDTO;
+import com.test.admin.service.AdminService;
 import com.test.admin.service.NoticeService;
 
 @Controller
@@ -20,23 +21,4 @@ public class NoticeController extends BoardController<NoticeDTO> {
 		super(service, "notice");
         this.service = service;
 	}
-
-	@Override
-	@PostMapping
-	public String post(Model model, NoticeDTO dto) {
-		
-	    dto.setAdmin(service.getCurrentAdmin());
-	    
-	    return super.post(model, dto);
-	}
-	
-	@Override
-	@PutMapping("/{seq}")
-	public String put(Model model, Long seq, NoticeDTO dto) {
-
-	    dto.setAdmin(service.getCurrentAdmin());
-		
-		return super.put(model, seq, dto);
-	}
-	
 }
