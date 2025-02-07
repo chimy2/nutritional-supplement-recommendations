@@ -13,13 +13,14 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class QueryDSLConfig {
 
-	private final EntityManager em;	
+	private final EntityManager em;
+
 //	JPA에서 SQL을 실행하는 객체 > 평소에는 감춰져 있음
 //	cf. Statement 객체, SqlSessionTemplate 객체
-	
+
 	@Bean
-	public JPAQueryFactory jPAQueryFactory() {
+	JPAQueryFactory jPAQueryFactory() {
 		return new JPAQueryFactory(em);
 	}
-	
+
 }
