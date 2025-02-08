@@ -1,12 +1,14 @@
 package com.test.admin.auth;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.test.admin.entity.Admin;
+import com.test.admin.dto.AdminDTO;
 
 import lombok.Getter;
 import lombok.ToString;
@@ -15,41 +17,30 @@ import lombok.ToString;
 @ToString
 public class AdminDetails implements UserDetails {
 	
-	private Admin admin;
+	private final Long seq;
 	
-	public AdminDetails(Admin admin) {
-		this.admin = admin;
+	private final String username;
+	
+	private final String password;
+	
+	private final String name;
+	
+	private final Set<AdminRole> auths;
+	
+	public AdminDetails(AdminDTO dto) {
+		this.seq = dto.getSeq();
+		this.username = dto.getId();
+		this.password = dto.getPw();
+		this.name = dto.getName();
+		this.auths = dto.getAuths();
 	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 
-        Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-
-        authorities.add(new GrantedAuthority() {
-            @Override
-            public String getAuthority() {
-                String role = "ROLE_MEMBER";
-                return role;
-            }
-        });
-
-        return authorities;
-	}
-
-	@Override
-	public String getPassword() {
-		return this.admin.getPw();
-	}
-
-	@Override
-	public String getUsername() {
-		return this.admin.getId();
-	}
-	
-	
-	public Long getSeq() {
-		return this.admin.getSeq();
+        return auths.stream()
+        		.map(auth -> new SimpleGrantedAuthority(auth.toString()))
+                .collect(Collectors.toList());
 	}
 	
 }
