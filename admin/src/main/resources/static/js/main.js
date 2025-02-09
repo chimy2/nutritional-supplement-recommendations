@@ -1,79 +1,91 @@
 /* modal */
-const modalContainer = $('.modal-container')[0];
-
-$(modalContainer).click((event) => {
-    if (event.target === modalContainer) {
-        closePopup();
-    }
-});
-
-$(modalContainer)
-    .find('.btn-modal-close')
-    .click(() => {
-        closePopup();
-    });
-
-function openPopup() {
-    modalContainer.classList.remove('d-none');
-}
-
-function closePopup() {
-    modalContainer.classList.add('d-none');
-}
-
-function openDeleteModal(seq) {
-    const board = getBoardName();
-    let boardName;
-
-    switch (board) {
-        case 'notice':
-            boardName = '공지사항';
-            break;
-        case 'nutri':
-            boardName = '영양제';
-            break;
-        case 'review':
-            boardName = '리뷰';
-            break;
-        case 'admin':
-            boardName = '관리자';
-            break;
-    }
-    $('.modal-title').text(`${boardName} 삭제`);
-    $('.modal-text').text(`해당 ${boardName}을(를) 삭제하시겠습니까?`);
-
-    $(modalContainer).find('input[name="seq"]').val(seq);
-
-    openPopup();
-}
-
-function getBoardName() {
+{
     const pathname = location.pathname;
-    return pathname.split('/')[1];
-}
+    const modalContainer = $('.modal-container')[0];
 
-function returnPage() {
-    history.back();
-}
-
-$(document).ready(function () {
-    /* select2 */
-    $('.select2-multiple').select2({
-        placeholder: 'Select Categories',
+    $(modalContainer).click((event) => {
+        if (event.target === modalContainer) {
+            closePopup();
+        }
     });
-});
 
-/* datetimepicker */
-$('.nutri-datetimepicker').datetimepicker({
-    format: 'MM/DD/YYYY hh:mm A',
-    icons: {
-        time: 'fa fa-clock', // 🕒 시간 선택 아이콘
-    },
-});
+    $(modalContainer)
+        .find('.btn-modal-close')
+        .click(() => {
+            closePopup();
+        });
 
-$('.admin-datetimepicker').datetimepicker({
-    format: 'YYYY-MM-DD',
-});
+    function openPopup() {
+        modalContainer.classList.remove('d-none');
+    }
+
+    function closePopup() {
+        modalContainer.classList.add('d-none');
+    }
+
+    function openDeleteModal(seq) {
+        const board = getBoardName(pathname);
+        let boardName;
+
+        switch (board) {
+            case 'notice':
+                boardName = '공지사항';
+                break;
+            case 'nutri':
+                boardName = '영양제';
+                break;
+            case 'review':
+                boardName = '리뷰';
+                break;
+            case 'admin':
+                boardName = '관리자';
+                break;
+        }
+        $('.modal-title').text(`${boardName} 삭제`);
+        $('.modal-text').text(`해당 ${boardName}을(를) 삭제하시겠습니까?`);
+
+        $(modalContainer).find('input[name="seq"]').val(seq);
+
+        openPopup();
+    }
+
+    function getBoardName(pathname) {
+        return pathname.split('/')[1];
+    }
+
+    function returnPage() {
+        const beforePathname = new URL(document.referrer).pathname;
+        const boardName = getBoardName(beforePathname);
+
+        if (
+            beforePathname.includes('write') ||
+            beforePathname.includes('edit')
+        ) {
+            location.href = `/${boardName}`;
+        } else {
+            history.back();
+        }
+    }
+
+    $(document).ready(function () {
+        /* select2 */
+        $('.select2-multiple').select2({
+            placeholder: 'Select Categories',
+        });
+    });
+
+    /* datetimepicker */
+    $('.nutri-datetimepicker').datetimepicker({
+        format: 'MM/DD/YYYY hh:mm A',
+        icons: {
+            time: 'fa fa-clock', // 🕒 시간 선택 아이콘
+        },
+    });
+
+    $('.admin-datetimepicker').datetimepicker({
+        format: 'YYYY-MM-DD',
+    });
+}
 
 /* admin verify */
 {
@@ -260,10 +272,10 @@ $('.admin-datetimepicker').datetimepicker({
             }
 
             if (
-                noticeManage.checked &&
-                nutriManage.checked &&
-                reviewManage.checked &&
-                adminManage.checked
+                noticeAll.checked &&
+                nutriAll.checked &&
+                reviewAll.checked &&
+                adminAll.checked
             ) {
                 superManage.checked = true;
             }
@@ -369,6 +381,7 @@ $('.admin-datetimepicker').datetimepicker({
                 .map((auth) => auth.trim());
 
             const reg = /(?<=ROLE_)[^_]+/;
+            // console.log(auths);
 
             auths.forEach((auth) => {
                 if (auth === '') return;
