@@ -21,7 +21,7 @@ INSERT INTO health (health) VALUES ('혈당');
 INSERT INTO health (health) VALUES ('치아_잇몸');
 INSERT INTO health (health) VALUES ('면역 기능');
 
-select * from health;
+-- SELECT * FROM health;
 
 -- ingredient 데이터 삽입
 INSERT INTO ingredient (name, category) VALUES
@@ -54,7 +54,7 @@ INSERT INTO ingredient (name, category) VALUES
 ('크레아틴', 0),
 ('프로폴리스', 0);
 
-select * from ingredient;
+-- SELECT * FROM ingredient;
 
 -- healthIngredient 데이터 삽입
 INSERT INTO healthIngredient (health_seq, ingredient_seq) VALUES
@@ -96,7 +96,7 @@ INSERT INTO healthIngredient (health_seq, ingredient_seq) VALUES
 (14, (SELECT seq FROM ingredient WHERE name = '칼슘')),
 (15, (SELECT seq FROM ingredient WHERE name = '비타민C')),
 (15, (SELECT seq FROM ingredient WHERE name = '비타민D'));
-select * from healthIngredient;
+-- SELECT * FROM healthIngredient;
 
 commit;
 
@@ -114,7 +114,7 @@ INSERT INTO goodCombination (ingredient_seq, good, reason, link) VALUES
 ((SELECT seq FROM ingredient WHERE name = '콜라겐'), (SELECT seq FROM ingredient WHERE name = '비타민C'), '콜라겐은 단백질의 한 종류로 체내에서 아미노산 단위로 분해된 후 다시 합성할 때 비타미 C가 필요합니다. ', 'https://m.blog.naver.com/ftc_news/222712166901'),
 ((SELECT seq FROM ingredient WHERE name = '철분'), (SELECT seq FROM ingredient WHERE name = '비타민C'), '철분은 산성 성질의 영양소와 복용하면 체내 흡수율을 높일 수 있습니다. ', 'https://www.mkhealth.co.kr/news/articleView.html?idxno=68047'),
 ((SELECT seq FROM ingredient WHERE name = '오메가3'), (SELECT seq FROM ingredient WHERE name = '비타민E'), '오메가3 지방산은 기름 성분으로, 빛이나 공기, 열 등에 의해 산화되는 등 산패되기 쉽다. 하지만, 비타민E가 이러한 산패 작용을 막아준다.', 'https://news.hidoc.co.kr/news/articleView.html?idxno=25148');
-select * from goodCombination;
+-- SELECT * FROM goodCombination;
 
 INSERT INTO badCombination (ingredient_seq, bad, reason, link) VALUES
 ((SELECT seq FROM ingredient WHERE name = '철분'), (SELECT seq FROM ingredient WHERE name = '칼슘'), '둘은 같은 통로로 흡수되어서 같이 먹으면 흡수율이 떨어질 수 있으므로 , 칼슘은 식사 후에 섭취하는 것이 좋습니다.', 'https://blog.naver.com/centum_surgery/221505150758'),
@@ -126,7 +126,7 @@ INSERT INTO badCombination (ingredient_seq, bad, reason, link) VALUES
 ((SELECT seq FROM ingredient WHERE name = '철분'), (SELECT seq FROM ingredient WHERE name = '아연'), '두 성분은 서로의 흡수를 저해하는 특징이 있다.', 'https://news.hidoc.co.kr/news/articleView.html?idxno=25148'),
 ((SELECT seq FROM ingredient WHERE name = '칼슘'), (SELECT seq FROM ingredient WHERE name = '마그네슘'), '칼슘과 마그네슘은 모두 골다공증을 예방하는 데 도움이 되지만 동시에 먹으면 흡수율이 떨어진다.', 'https://www.gqkorea.co.kr/2023/09/19/%ED%95%A8%EA%BB%98%ED%95%98%EB%A9%B4-%EB%8F%85%EC%9D%B4-%EB%90%98%EB%8A%94-%EC%98%81%EC%96%91%EC%A0%9C/'),
 ((SELECT seq FROM ingredient WHERE name = '마그네슘'), (SELECT seq FROM ingredient WHERE name = '칼슘'), '칼슘과 마그네슘은 모두 골다공증을 예방하는 데 도움이 되지만 동시에 먹으면 흡수율이 떨어진다.', 'https://www.gqkorea.co.kr/2023/09/19/%ED%95%A8%EA%BB%98%ED%95%98%EB%A9%B4-%EB%8F%85%EC%9D%B4-%EB%90%98%EB%8A%94-%EC%98%81%EC%96%91%EC%A0%9C/');
-select * from badCombination;
+-- SELECT * FROM badCombination;
 
 commit;
 
@@ -159,7 +159,7 @@ insert into ingredientContent (seq,functionalContent,dailyIntake,precautionsForI
 insert into ingredientContent (seq,functionalContent,dailyIntake,precautionsForIngestion,ingredient_seq) VALUES(24,'(가) 근육, 결합조직 등 신체조직의 구성성분<br/>(나) 효소, 호르몬, 항체의 구성에 필요<br/>(다) 체내 필수 영양성분이나 활성물질의 운반과 저장에 필요<br/>(라) 체액, 산-염기의 균형 유지에 필요<br/>(마) 에너지, 포도당, 지질의 합성에 필요','단백질로서 12.0 g 이상','특정 단백질에 알레르기를 나타내는 경우에는 섭취 주의',24);
 insert into ingredientContent (seq,functionalContent,dailyIntake,precautionsForIngestion,ingredient_seq) VALUES(25,'준비중','준비중','준비중',25);
 
-select * from ingredientContent;
+-- SELECT * FROM ingredientContent;
 
 
 -- 성별/나이대별 insert
@@ -177,7 +177,7 @@ INSERT INTO surveyGenderAge (gender, age) VALUES
 ('m', 50),
 ('m', 60);
 
-select * from surveyGenderAge;
+-- SELECT * FROM surveyGenderAge;
 
 -- 성별/나이대별 + 성분 연관 테이블
 INSERT INTO ingredientGenderAge (genderAge_seq, ingredient_seq) VALUES
@@ -218,7 +218,7 @@ INSERT INTO ingredientGenderAge (genderAge_seq, ingredient_seq) VALUES
 (12,13),
 (12,18);
 
-select * from ingredientGenderAge;
+-- SELECT * FROM ingredientGenderAge;
 
 INSERT INTO surveyHealth (name) VALUES
 ('간 건강'),
@@ -228,7 +228,7 @@ INSERT INTO surveyHealth (name) VALUES
 ('혈당 관리'),
 ('혈압 관리');
 
-select * from surveyHealth;
+-- SELECT * FROM surveyHealth;
 
 INSERT INTO ingredientHealth (health_seq, ingredient_seq) VALUES
 (1,2),
@@ -251,14 +251,14 @@ INSERT INTO ingredientHealth (health_seq, ingredient_seq) VALUES
 (6,11),
 (6,13);
 
-select * from ingredientHealth;
+-- SELECT * FROM ingredientHealth;
 
 INSERT INTO surveyOrgan (name) VALUES
 ('눈 건강'),
 ('뼈 건강'),
 ('장 건강');
 
-select * from surveyOrgan;
+-- SELECT * FROM surveyOrgan;
 
 INSERT INTO ingredientOrgan (organ_seq, ingredient_seq) VALUES
 (1,1),
@@ -269,7 +269,7 @@ INSERT INTO ingredientOrgan (organ_seq, ingredient_seq) VALUES
 (2,18),
 (3,19);
 
-select * from ingredientOrgan;
+-- SELECT * FROM ingredientOrgan;
 
 INSERT INTO surveyDaily (name) VALUES
 ('운동 능력 및 근육량'),
@@ -279,7 +279,7 @@ INSERT INTO surveyDaily (name) VALUES
 ('치아 및 잇몸'),
 ('피부 건강');
 
-select * from surveyDaily;
+-- SELECT * FROM surveyDaily;
 
 INSERT INTO ingredientDaily (daily_seq, ingredient_seq) VALUES
 (1,13),
@@ -301,7 +301,7 @@ INSERT INTO ingredientDaily (daily_seq, ingredient_seq) VALUES
 (6,3),
 (6,23);
 
-select * from ingredientDaily;
+-- SELECT * FROM ingredientDaily;
 
 
 INSERT INTO productInfo (seq,productImage,CompanyName,productName,ReportNo,registrationDate,expirationDate,medicationType,ingestionMethod,packagingMaterial,packagingMethod,preservation,precautionsForIngestion,functionalContent,standardsAndSpecifications) VALUES 

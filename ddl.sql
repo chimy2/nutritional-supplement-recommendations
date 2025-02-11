@@ -1,46 +1,45 @@
 
-
-DROP TABLE ingredientDaily;
-DROP TABLE ingredientHealth;
-DROP TABLE ingredientOrgan;
-DROP TABLE ingredientGenderAge;
-DROP TABLE surveyDaily;
-DROP TABLE surveyOrgan;
-DROP TABLE surveyHealth;
-DROP TABLE surveyGenderAge;
-DROP TABLE memberAddress;
-DROP TABLE address;
-DROP TABLE adminAuthList;
-DROP TABLE adminAuth;
-DROP TABLE healthIngredient;
-DROP TABLE logError;
-DROP TABLE logApplication;
-DROP TABLE logLevel;
-DROP TABLE userActivity;
-DROP TABLE activityType;
-DROP TABLE emailVerification;
-DROP TABLE badCombination;
-DROP TABLE goodCombination;
-DROP TABLE ingredientProduct;
-DROP TABLE ingredientContent;
-DROP TABLE ingredient;
-DROP TABLE news;
-DROP TABLE logSession;
-DROP TABLE sessionStatus;
-DROP TABLE sessionType;
-DROP TABLE health;
-DROP TABLE communityComment;
-DROP TABLE communityPost;
-DROP TABLE faqPost;
-DROP TABLE noticePost;
-DROP TABLE admin;
-DROP TABLE medicationRecord;
-DROP TABLE productMedication;
-DROP TABLE reviewImage;
-DROP TABLE reviewComment;
-DROP TABLE review;
-DROP TABLE member;
-DROP TABLE productInfo;
+DROP TABLE IF EXISTS ingredientDaily;
+DROP TABLE IF EXISTS ingredientHealth;
+DROP TABLE IF EXISTS ingredientOrgan;
+DROP TABLE IF EXISTS ingredientGenderAge;
+DROP TABLE IF EXISTS surveyDaily;
+DROP TABLE IF EXISTS surveyOrgan;
+DROP TABLE IF EXISTS surveyHealth;
+DROP TABLE IF EXISTS surveyGenderAge;
+DROP TABLE IF EXISTS memberAddress;
+DROP TABLE IF EXISTS address;
+DROP TABLE IF EXISTS adminAuthList;
+DROP TABLE IF EXISTS adminAuth;
+DROP TABLE IF EXISTS healthIngredient;
+DROP TABLE IF EXISTS logError;
+DROP TABLE IF EXISTS logApplication;
+DROP TABLE IF EXISTS logLevel;
+DROP TABLE IF EXISTS userActivity;
+DROP TABLE IF EXISTS activityType;
+DROP TABLE IF EXISTS emailVerification;
+DROP TABLE IF EXISTS badCombination;
+DROP TABLE IF EXISTS goodCombination;
+DROP TABLE IF EXISTS ingredientProduct;
+DROP TABLE IF EXISTS ingredientContent;
+DROP TABLE IF EXISTS ingredient;
+DROP TABLE IF EXISTS news;
+DROP TABLE IF EXISTS logSession;
+DROP TABLE IF EXISTS sessionStatus;
+DROP TABLE IF EXISTS sessionType;
+DROP TABLE IF EXISTS health;
+DROP TABLE IF EXISTS communityComment;
+DROP TABLE IF EXISTS communityPost;
+DROP TABLE IF EXISTS faqPost;
+DROP TABLE IF EXISTS noticePost;
+DROP TABLE IF EXISTS admin;
+DROP TABLE IF EXISTS medicationRecord;
+DROP TABLE IF EXISTS productMedication;
+DROP TABLE IF EXISTS reviewImage;
+DROP TABLE IF EXISTS reviewComment;
+DROP TABLE IF EXISTS review;
+DROP TABLE IF EXISTS member;
+DROP TABLE IF EXISTS productInfo;
 
 CREATE TABLE `productInfo` (
 	`seq`	INT	AUTO_INCREMENT PRIMARY KEY,
@@ -396,7 +395,7 @@ CREATE TABLE `ingredientDaily` (
 );
 
 
-DROP VIEW vwGoodCombination;
+DROP VIEW IF EXISTS vwGoodCombination;
 
 CREATE or replace VIEW vwGoodCombination AS
 SELECT g.seq, 
@@ -412,7 +411,7 @@ LEFT JOIN ingredient i ON g.ingredient_seq = i.seq
 LEFT JOIN ingredient i2 ON g.good = i2.seq
 LEFT JOIN ingredientContent c ON g.ingredient_seq = c.ingredient_seq;
 
-DROP VIEW vwBadCombination;
+DROP VIEW IF EXISTS vwBadCombination;
 
 CREATE VIEW vwBadCombination AS
 SELECT g.seq, 
@@ -429,7 +428,7 @@ LEFT JOIN ingredient i2 ON g.bad = i2.seq
 LEFT JOIN ingredientContent c ON g.ingredient_seq = c.ingredient_seq;
 
 -- 성별 나이대별 영양제 성분 및 내용 뷰
-drop view vwGenderAgeRecommend;
+DROP VIEW IF EXISTS vwGenderAgeRecommend;
 
 CREATE OR REPLACE VIEW vwGenderAgeRecommend AS
 SELECT 
@@ -446,7 +445,7 @@ INNER JOIN ingredient i ON iga.ingredient_seq = i.seq
 INNER JOIN ingredientContent ic ON i.seq = ic.ingredient_seq;
 
 -- 건강검진 영양제 성분 및 내용 뷰
-drop view vwHealthRecommend;
+DROP VIEW IF EXISTS vwHealthRecommend;
 
 CREATE VIEW vwHealthRecommend AS
 SELECT ih.seq, 
@@ -461,7 +460,7 @@ INNER JOIN ingredient i ON ih.ingredient_seq = i.seq
 INNER JOIN ingredientContent ic ON i.seq = ic.ingredient_seq;
 
 -- 주요 장기 영양제 성분 및 내용 뷰
-drop view vwOrganRecommend;
+DROP VIEW IF EXISTS vwOrganRecommend;
 
 CREATE VIEW vwOrganRecommend AS
 SELECT io.seq, 
@@ -476,7 +475,7 @@ INNER JOIN ingredient i ON io.ingredient_seq = i.seq
 INNER JOIN ingredientContent ic ON i.seq = ic.ingredient_seq;
 
 -- 일상생활 영양제 성분 및 내용 뷰
-drop view vwDailyRecommend;
+DROP VIEW IF EXISTS vwDailyRecommend;
 
 CREATE VIEW vwDailyRecommend AS
 SELECT id.seq, 
