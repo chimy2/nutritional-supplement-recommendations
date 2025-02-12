@@ -5,22 +5,31 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
 
 import com.test.admin.dto.AdminDTO;
 import com.test.admin.dto.NoticeDTO;
+
+import jakarta.transaction.Transactional;
 
 @SpringBootTest
 public class NoticeServiceTest {
 
 	@Autowired
 	private NoticeService service;
-
+	
+	@Autowired
+	private AdminService adminService;
+	
 //	@Test
+//	@Transactional
+//	@Rollback(false)
 	public void testCreate() {
 		
 		long before = service.count();
@@ -30,6 +39,8 @@ public class NoticeServiceTest {
 		});
 		
 		long after = service.count();
+		
+		System.out.println(before +", "+ after);
 		
 		assertEquals(15, after - before);
 	}
@@ -42,14 +53,18 @@ public class NoticeServiceTest {
 
 		String[] temp = str.split("\n");
 		
+		Random random = new Random();
+		
 		for(int i=0; i<temp.length; i+=2) {
-			Random random = new Random();
+			Long randomSeq = random.nextLong(10) + 1;
+			
+			Optional<AdminDTO> adminDTO = adminService.get(randomSeq);
 			
 			NoticeDTO dto = NoticeDTO.builder()
 					.title(temp[i])
 					.content(temp[i + 1])
 					.regDate(LocalDateTime.now())
-					.admin(AdminDTO.builder().seq(random.nextLong(10) + 1).build())
+					.admin(adminDTO.get())
 					.build();
 			
 			result.add(dto);

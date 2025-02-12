@@ -18,14 +18,17 @@ import com.test.admin.repository.AdminRepository;
 public class AdminServiceTest {
 
 	@Autowired
-	private AdminRepository adminRepository;
+	private AdminRepository repository;
+	
+	@Autowired
+	private AdminService service;
 	
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 //	@Test
 	public void count() {
-		long count = adminRepository.count();
+		long count = repository.count();
 		
 		System.out.println(count);
 		
@@ -36,15 +39,15 @@ public class AdminServiceTest {
 	public void insertAdmin() {
 		List<AdminDTO> adminDTOList = getAdminList();
 		
-		List<Admin> adminList = adminDTOList.stream().map(admin -> admin.toEntity()).toList();
+		List<Admin> adminList = adminDTOList.stream().map(admin -> admin.toEntity(service.getAuthResolver())).toList();
 	
 		for(Admin admin: adminList) {
-			if(adminRepository.findById(admin.getId()) == null) {
-				adminRepository.save(admin);
+			if(repository.findById(admin.getId()) == null) {
+				repository.save(admin);
 			}
 		}
 		
-		assertEquals(10, adminRepository.count());
+		assertEquals(10, repository.count());
 	}
 	
 	public List<AdminDTO> getAdminList() {
@@ -66,7 +69,7 @@ public class AdminServiceTest {
 		
 //	@Test
 	public void checkEncodedPasswords() {
-	    List<Admin> adminList = adminRepository.findAll();
+	    List<Admin> adminList = repository.findAll();
 
 	    for (Admin admin : adminList) {
 	        System.out.println("Username: " + admin.getId() + ", Encoded Password: " + admin.getPw());
@@ -78,10 +81,10 @@ public class AdminServiceTest {
 		
 		int num = 11;
 		
-		List<Admin> list = adminRepository.findBySeqGreaterThanEqual(11);
+		List<Admin> list = repository.findBySeqGreaterThanEqual(11);
 		
 		list.stream().forEach(admin -> {
-			adminRepository.delete(admin);
+			repository.delete(admin);
 		});
 	}
 }

@@ -59,7 +59,9 @@ public class NoticeService extends BoardServiceImpl<Notice, NoticeDTO> {
 	
 	public NoticeDTO save(NoticeDTO dto) {
 		
-	    dto.setAdmin(adminService.getCurrentAdmin());
+		if(dto.getAdmin() == null) {
+			dto.setAdmin(adminService.getCurrentAdmin());
+		}
 		
 		Function<AdminRole, AdminAuth> authResolver = adminService.getAuthResolver();
 

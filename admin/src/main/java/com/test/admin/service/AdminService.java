@@ -1,6 +1,7 @@
 package com.test.admin.service;
 
 import java.beans.Transient;
+import java.util.Optional;
 import java.util.function.Function;
 
 import org.springframework.security.core.Authentication;
@@ -94,7 +95,7 @@ public class AdminService extends BoardServiceImpl<Admin, AdminDTO> implements U
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
 		AdminDetails principal = (AdminDetails) authentication.getPrincipal();
-
+		
 		AdminDTO dto = get(principal.getSeq()).orElse(null);
 
 		return dto;

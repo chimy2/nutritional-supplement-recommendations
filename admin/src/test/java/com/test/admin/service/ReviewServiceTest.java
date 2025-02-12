@@ -18,7 +18,7 @@ class ReviewServiceTest {
 	@Autowired
 	private ReviewService service;
 
-	@Test
+//	@Test
 	public void testCreateDummyList() {
 //		Member 기본키값이 고정이므로 회원 생성 후 실행
 //		seq가 5~13번 회원이 존재해야 함
