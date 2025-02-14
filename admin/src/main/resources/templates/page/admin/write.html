@@ -186,6 +186,8 @@
 							</table>
 						</div>
 
+						<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+						
 						<div class="d-flex justify-content-end">
 							<button class="btn btn-primary mt-3">[(#{button.admin.write})]</button>
 						</div>

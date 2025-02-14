@@ -23,6 +23,7 @@
 								id="floatingTextarea" name="content" style="height: 350px;" required></textarea>
 							<label for="floatingTextarea">Content</label>
 						</div>
+						<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 						<div class="d-flex justify-content-end">
 							<button class="btn btn-primary mt-3">[(#{button.notice.write})]</button>
 						</div>

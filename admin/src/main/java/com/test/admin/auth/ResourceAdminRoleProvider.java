@@ -62,4 +62,8 @@ public class ResourceAdminRoleProvider {
 	public String getEditPath() {
 		return String.format("%s/*/edit", this.path);
 	}
+	
+	public String getAdminAuthPath() {
+		return String.format("%s/*/auths", this.path);
+	}
 }

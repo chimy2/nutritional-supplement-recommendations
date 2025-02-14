@@ -31,7 +31,8 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     	
-        http.csrf((csrfConfig) -> csrfConfig.disable())
+        http
+//        .csrf((csrfConfig) -> csrfConfig.disable())
 	        .headers((headerConfig) -> headerConfig.frameOptions((frameOptionConfig -> frameOptionConfig.disable())))
 	        .authorizeHttpRequests((authorizeRequests) -> {
 	        	permitCommonRequests(authorizeRequests);
@@ -99,10 +100,19 @@ public class SecurityConfig {
 	                .requestMatchers(HttpMethod.POST, provider.getPath()).hasAnyAuthority(provider.getRole(AdminPermission.Create));
 	    		
 			} if (provider.getRole(AdminPermission.Update) != null) {
+				
+				if(res.equals("admin")) {
 
+		    		authorizeRequests
+		    		.requestMatchers(HttpMethod.PUT, provider.getAdminAuthPath()).hasAnyAuthority(provider.getRole(AdminPermission.Update));
+				} else {
+
+					authorizeRequests
+					.requestMatchers(HttpMethod.PUT, provider.getSubPaths()).hasAnyAuthority(provider.getRole(AdminPermission.Update));
+				}
+				
 	    		authorizeRequests
-	                .requestMatchers(HttpMethod.GET, provider.getEditPath()).hasAnyAuthority(provider.getRole(AdminPermission.Update))
-	                .requestMatchers(HttpMethod.PUT, provider.getSubPaths()).hasAnyAuthority(provider.getRole(AdminPermission.Update));
+	                .requestMatchers(HttpMethod.GET, provider.getEditPath()).hasAnyAuthority(provider.getRole(AdminPermission.Update));
 	    		
 			} if (provider.getRole(AdminPermission.Delete) != null) {
 
