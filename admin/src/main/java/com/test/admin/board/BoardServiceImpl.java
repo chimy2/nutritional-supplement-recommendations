@@ -18,6 +18,7 @@ public class BoardServiceImpl<T extends Board, D extends BoardDTO> implements Bo
 
 	@Override
 	public Page<D> getList(int page, int size) {
+		
 		Pageable pageable = PageRequest.of(page - 1, size, Sort.by(Sort.Direction.DESC, "seq"));
 		Page<T> entityPage = repository.findAll(pageable);
         return entityPage.map(entity -> (D) entity.toDTO()); 
@@ -45,5 +46,17 @@ public class BoardServiceImpl<T extends Board, D extends BoardDTO> implements Bo
 
 	private D save(D dto) {
 		return (D) repository.save((T) dto.toEntity()).toDTO();
+	}
+
+	@Override
+	public long count() {
+		return repository.count();
+	}
+
+	public PageDTO getPagenation(int page, int size) {
+		
+		int blockSize = 10;
+		PageDTO dto = new PageDTO(page, size, count(), blockSize);
+		return dto;
 	}
 }

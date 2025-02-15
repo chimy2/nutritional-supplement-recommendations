@@ -30,6 +30,8 @@ public abstract class BoardController<D extends BoardDTO> {
 		
 		model.addAttribute("list", service.getList(page, size));
 		
+		model.addAttribute("pagination", service.getPagenation(page, size));
+		
 		return PathHelper.getListPath(PATH);
 	}
 	

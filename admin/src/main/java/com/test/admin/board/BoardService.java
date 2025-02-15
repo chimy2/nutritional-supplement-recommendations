@@ -11,4 +11,5 @@ public interface BoardService<T extends Board, D extends BoardDTO> {
 	D create(D dto);
 	D update(D dto);
 	void delete(Long seq);
+	long count();
 }

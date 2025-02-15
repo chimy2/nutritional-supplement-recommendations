@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Page</title>
+    </head>
+    <body>
+
+	<nav th:fragment="page" aria-label="...">
+		<ul class="pagination my-auto justify-content-center flex-wrap" th:object="${pagination}">
+			<li class="page-item" th:classappend="${pagination.currentPage == 1 ? 'disabled' : ''}"><a class="page-link" href="?page=1"
+					tabindex="-1">&laquo</a></li>
+			<li class="page-item" th:classappend="${pagination.startBlockPage == 1 ? 'disabled' : ''}"><a class="page-link" th:href="@{?page={page}(page=*{startBlockPage - blockSize})}"
+					tabindex="-1">&lt</a></li>
+			<th:block th:each="page: ${#numbers.sequence(pagination.startBlockPage, pagination.endBlockPage)}">
+				<li class="page-item" th:classappend="${page == pagination.currentPage ? 'active' : ''}">
+					<a class="page-link" th:href="@{?page={page}(page=${page})}">
+						[[${page}]] <span class="sr-only">(current)</span>
+					</a>
+				</li>
+			</th:block>
+			<li class="page-item" th:classappend="${pagination.endBlockPage == pagination.lastPage ? 'disabled' : ''}"><a class="page-link" th:href="@{?page={page}(page=*{startBlockPage + blockSize})}">&gt</a></li>
+			<li class="page-item" th:classappend="${pagination.currentPage == pagination.lastPage ? 'disabled' : ''}"><a class="page-link" th:href="@{?page={page}(page=*{lastPage})}">&raquo</a></li>
+		</ul>
+	</nav>
+</body>
+</html>
