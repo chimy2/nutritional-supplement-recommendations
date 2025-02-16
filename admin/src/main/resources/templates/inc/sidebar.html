@@ -12,23 +12,23 @@
 				<h3 class="text-primary">[[#{title}]]</h3>
 			</a>
 			<div class="navbar-nav w-100">
-				<a href="/" class="nav-item nav-link">
+				<a href="/" class="nav-item nav-link" th:classappend="${menu == 'home' ? 'active' : ''}">
 					<i class="fa fa-tachometer-alt me-2"></i>
 					[[#{menu.home}]]
 				</a>
-				<a href="/notice" class="nav-link nav-link">
+				<a href="/notice" class="nav-link nav-link" th:classappend="${menu == 'notice' ? 'active' : ''}">
 					<i class="fa fa-bullhorn me-2"></i>
 					[[#{menu.notice}]]
 				</a>
-				<a href="/nutri" class="nav-item nav-link">
+				<a href="/nutri" class="nav-item nav-link" th:classappend="${menu == 'nutri' ? 'active' : ''}">
 					<i class="fa fa-capsules me-2"></i>
 					[[#{menu.nutri}]]
 				</a>
-				<a href="/review" class="nav-item nav-link">
+				<a href="/review" class="nav-item nav-link" th:classappend="${menu == 'review' ? 'active' : ''}">
 					<i class="fa fa-star me-2"></i>
 					[[#{menu.review}]]
 				</a>
-				<a href="/admin" class="nav-item nav-link">
+				<a href="/admin" class="nav-item nav-link" th:classappend="${menu == 'admin' ? 'active' : ''}">
 					<i class="fa fa-user-shield me-2"></i>
 					[[#{menu.admin}]]
 				</a>

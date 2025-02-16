@@ -32,6 +32,8 @@ public abstract class BoardController<D extends BoardDTO> {
 		
 		model.addAttribute("pagination", service.getPagenation(page, size));
 		
+		model.addAttribute("menu", PATH);
+		
 		return PathHelper.getListPath(PATH);
 	}
 	
@@ -43,12 +45,17 @@ public abstract class BoardController<D extends BoardDTO> {
 		
 		model.addAttribute("board", board);
 		
+		model.addAttribute("menu", PATH);
+		
 		return PathHelper.getDetailPath(PATH);
 	}
 	
 //	글쓰기 화면
 	@GetMapping("/write")
 	public String getWriteView(Model model) {
+		
+		model.addAttribute("menu", PATH);
+		
 		return PathHelper.getWritePath(PATH);
 	}
 	
@@ -59,6 +66,8 @@ public abstract class BoardController<D extends BoardDTO> {
 		D board = service.get(seq).orElseThrow(() -> new IllegalArgumentException("존재하지 않습니다."));
 		
 		model.addAttribute("board", board);
+		
+		model.addAttribute("menu", PATH);
 		
 		return PathHelper.getEditPath(PATH);
 	}

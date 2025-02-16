@@ -32,10 +32,12 @@ public class SecurityConfig {
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     	
         http
-//        .csrf((csrfConfig) -> csrfConfig.disable())
 	        .headers((headerConfig) -> headerConfig.frameOptions((frameOptionConfig -> frameOptionConfig.disable())))
 	        .authorizeHttpRequests((authorizeRequests) -> {
+//	        	공통 권한
 	        	permitCommonRequests(authorizeRequests);
+	        	
+//	        	특정 권한
 	        	permitSpecificRequests(authorizeRequests);
 	        })
             .exceptionHandling(handling -> handling
