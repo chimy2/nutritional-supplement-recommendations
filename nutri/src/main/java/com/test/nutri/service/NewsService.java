@@ -102,7 +102,7 @@ public class NewsService {
 				return;
 			} else if(!isFind && newsQueryDSLRepository.countByTitleAndLinkAndRegDate(list.getItems().getLast()) == 0) {
 				start++;
-				return;
+				continue;
 			}
 			
 			for (int i = list.getItems().size() - 1; i >= 0; i--) {
@@ -186,30 +186,39 @@ public class NewsService {
 
 		while (start > 0) {
 			list = newsAPI.getNewsList(start);
-			
-			if(isFind) {
+			if (isFind) {
 				for (int i = list.getItems().size() - 1; i >= 0; i--) {
-					
+
 					news = list.getItems().get(i);
 					newsRepository.save(news.toEntity());
 				}
 				start--;
-				return;
-			} else if(!isFind && newsQueryDSLRepository.countByTitleAndLinkAndRegDate(list.getItems().getLast()) == 0) {
-				start++;
-				return;
+			} else if (!isFind
+					&& newsQueryDSLRepository.countByTitleAndLinkAndRegDate(list.getItems().getLast()) == 0) {
+				if (start == 9) {
+					for (int i = list.getItems().size() - 1; i >= 0; i--) {
+
+						news = list.getItems().get(i);
+						newsRepository.save(news.toEntity());
+					}
+					start--;
+					isFind = true;
+				} else {
+					start++;
+				}
+			} else {
+
+				int findIndex = binarySearch(list.getItems());
+
+				for (int i = findIndex - 1; i >= 0; i--) {
+
+					news = list.getItems().get(i);
+
+					newsRepository.save(news.toEntity());
+				}
+				isFind = true;
+				start--;
 			}
-			
-			int findIndex = binarySearch(list.getItems());
-			
-			for (int i = findIndex - 1; i >= 0; i--) {
-				
-				news = list.getItems().get(i);
-				
-				newsRepository.save(news.toEntity());
-			}
-			isFind = true;
-			start--;
 		}
 	}
 
