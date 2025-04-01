@@ -76,49 +76,6 @@ public class NewsService {
 	}
 
     /**
-     * 최신 뉴스 데이터를 외부 뉴스 API에서 가져와 DB에 저장합니다.
-     * 
-     * 뉴스 API에서 데이터를 가져와 뉴스 제목, 링크, 날짜 등을 기준으로 이미 DB에 저장된 뉴스가 있는지 확인하고,
-     * 중복되지 않는 뉴스만 DB에 저장합니다.
-     */
-	void updateLatestNews() {
-
-		int start = 1;
-		boolean isFind = false;
-		
-		NewsListDTO list;
-		NewsDTO news;
-
-		while (start > 0) {
-			list = newsAPI.getNewsList(start);
-			
-			if(isFind) {
-				for (int i = list.getItems().size() - 1; i >= 0; i--) {
-					
-					news = list.getItems().get(i);
-					newsRepository.save(news.toEntity());
-				}
-				start--;
-				return;
-			} else if(!isFind && newsQueryDSLRepository.countByTitleAndLinkAndRegDate(list.getItems().getLast()) == 0) {
-				start++;
-				continue;
-			}
-			
-			for (int i = list.getItems().size() - 1; i >= 0; i--) {
-				
-				news = list.getItems().get(i);
-				
-				if (newsQueryDSLRepository.countByTitleAndLinkAndRegDate(news) == 0) {
-					newsRepository.save(news.toEntity());
-				}
-			}
-			isFind = true;
-			start--;
-		}
-	}
-
-    /**
      * DB에 저장된 뉴스가 없을 경우, 외부 API에서 모든 뉴스 데이터를 가져와 DB에 삽입합니다.
      * 
      * 2024년 11월 1일 이후의 뉴스부터 가져와 저장하며, 날짜를 기준으로 구분하여 뉴스 데이터를 DB에 삽입합니다.
@@ -136,7 +93,7 @@ public class NewsService {
 			list = newsAPI.getNewsList(start);
 
 //			API 검색 시작 위치 제한 때문에 조건 추가
-			if (list.getItems().getLast().getPubDate().compareTo(baseDate) <= 0 || start == 10) {
+			if (list.getItems().getLast().getPubDate().compareTo(baseDate) <= 0 || start == 9) {
 				for (int i = list.getItems().size() - 1; i >= 0; i--) {
 					
 					news = list.getItems().get(i);
@@ -243,5 +200,49 @@ public class NewsService {
 		}
 		
 		return left;
+	}
+
+    /**
+     * 최신 뉴스 데이터를 외부 뉴스 API에서 가져와 DB에 저장합니다.
+     * 
+     * 뉴스 API에서 데이터를 가져와 뉴스 제목, 링크, 날짜 등을 기준으로 이미 DB에 저장된 뉴스가 있는지 확인하고,
+     * 중복되지 않는 뉴스만 DB에 저장합니다.
+     */
+	@Deprecated
+	void updateLatestNews() {
+
+		int start = 1;
+		boolean isFind = false;
+		
+		NewsListDTO list;
+		NewsDTO news;
+
+		while (start > 0) {
+			list = newsAPI.getNewsList(start);
+			
+			if(isFind) {
+				for (int i = list.getItems().size() - 1; i >= 0; i--) {
+					
+					news = list.getItems().get(i);
+					newsRepository.save(news.toEntity());
+				}
+				start--;
+				return;
+			} else if(!isFind && newsQueryDSLRepository.countByTitleAndLinkAndRegDate(list.getItems().getLast()) == 0) {
+				start++;
+				continue;
+			}
+			
+			for (int i = list.getItems().size() - 1; i >= 0; i--) {
+				
+				news = list.getItems().get(i);
+				
+				if (newsQueryDSLRepository.countByTitleAndLinkAndRegDate(news) == 0) {
+					newsRepository.save(news.toEntity());
+				}
+			}
+			isFind = true;
+			start--;
+		}
 	}
 }

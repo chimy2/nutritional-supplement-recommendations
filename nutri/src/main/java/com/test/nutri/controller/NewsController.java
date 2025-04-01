@@ -26,7 +26,7 @@ public class NewsController {
      * News Service 객체.
      * 뉴스와 관련된 비즈니스 로직을 처리하는 서비스 클래스입니다.
      */
-	private final NewsService newsService;
+	private final NewsService service;
 
     /**
      * 뉴스 목록을 반환하고, 페이징 처리를 위한 HTML을 생성하는 메소드입니다.
@@ -37,16 +37,13 @@ public class NewsController {
      */
 	@GetMapping("/news")
 	public String news(Model model, @RequestParam(defaultValue = "1", name = "page") Integer page) {
-		
-		newsService.updateNews();
-		
-		int count = newsService.getCount();
+		int count = service.getCount();
 		double maxListSize = 6;
 		double maxPageSize = 10;
 		int pageCount = (int) Math.ceil(count / maxListSize);
 		int offset = (int) ((page - 1) * maxListSize);
 
-		List<NewsDTO> list = newsService.getNewsList(offset, (int) maxListSize);
+		List<NewsDTO> list = service.getNewsList(offset, (int) maxListSize);
 
 		StringBuilder sb = new StringBuilder();
 
