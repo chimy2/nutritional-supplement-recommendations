@@ -60,29 +60,35 @@ public class NewsAPI {
      * @return {@link NewsListDTO} 객체에 매핑된 뉴스 목록.
      */
 	public NewsListDTO getNewsList() {
-		String search = null;
-		try {
-			search = URLEncoder.encode("영양제,건강", "UTF-8");
-		} catch (Exception e) {
-			throw new RuntimeException("검색어 인코딩 실패", e);
+		return getNewsList(1);
+	}
+	
+	/**
+	 * 모든 뉴스 검색 결과를 가져오는 메서드.
+	 * 
+     * '영양제, 건강'을 검색어로 사용하여 네이버 뉴스 API가 최대로 제공해주는 최신 1000개의 뉴스 목록을 가져옵니다.
+     * 
+	 * @return {@link NewsListDTO} 객체에 매핑된 뉴스 목록.
+	 */
+	public NewsListDTO getAllNewsLists() {
+		NewsListDTO dto = new NewsListDTO();
+
+		for (int i = 1; i <= 10; i++) {
+			NewsListDTO temp = getNewsList(i);
+
+			if (i == 0) {
+				dto.setLastBuildDate(temp.getLastBuildDate());
+				dto.setTotal(temp.getTotal());
+				dto.setStart(temp.getStart());
+			} else {
+				dto.setLastBuildDate(temp.getLastBuildDate());
+			}
+
+			dto.setDisplay(dto.getDisplay() + temp.getDisplay());
+			dto.getItems().addAll(temp.getItems());
 		}
-		
-		String apiURL = String.format("https://openapi.naver.com/v1/search/news?query=%s&display=100&sort=date", search);
-		
-		Map<String, String> requestHeaders = new HashMap<String, String>();
-		requestHeaders.put("X-Naver-Client-Id",  clientId);
-		requestHeaders.put("X-Naver-Client-Secret",  clientSecret);
-		
-		String responseBody = get(apiURL, requestHeaders);
-		
-		try {
-			return objectMapper.readValue(responseBody, NewsListDTO.class);
-		} catch (JsonMappingException e) {
-			e.printStackTrace();
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
-		return null;
+
+		return dto;
 	}
 
     /**
@@ -92,7 +98,7 @@ public class NewsAPI {
      * @return {@link NewsListDTO} 객체에 매핑된 뉴스 목록.
      */
 	public NewsListDTO getNewsList(int start){
-		if(start < 1 || start >= 10) {
+		if(start < 1 || start > 10) {
 			return null;
 		}
 		

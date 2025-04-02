@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.test.nutri.model.NewsListDTO;
 import com.test.nutri.repository.NewsRepository;
 
 /**
@@ -74,5 +75,18 @@ public class NewsServiceTest {
 //		개선 메서드 평균 시간: 103157846ns, 103ms, 0sec
 
 		assertEquals(true, beforeAvg > afterAvg);
+	}
+	
+//	@Test
+	public void testInsertAllNews() {
+		repository.deleteAll();
+		
+		int count = service.getCount();
+		System.out.println("삭제 결과 : " + count);
+		System.out.println("인서트 시작");
+		service.insertAllNews();
+		
+		count = service.getCount();
+		System.out.println("삽입 결과 : " + count);
 	}
 }

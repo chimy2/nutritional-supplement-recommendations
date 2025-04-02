@@ -20,6 +20,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class NewsDTO {
+	
+	private Long seq;
 
     /** 뉴스 제목 */
 	private String title;
@@ -53,6 +55,7 @@ public class NewsDTO {
      */
 	public News toEntity() {
 		return News.builder()
+				.seq(seq)
 				.title(title)
 				.originalLink(originallink)
 				.link(link)

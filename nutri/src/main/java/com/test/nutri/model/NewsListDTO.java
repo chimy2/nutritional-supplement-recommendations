@@ -2,9 +2,12 @@ package com.test.nutri.model;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * NewsListDTO는 뉴스 목록을 저장하고 전달하기 위한 데이터 전송 객체입니다.
@@ -29,6 +32,10 @@ public class NewsListDTO {
 	
     /** 뉴스 데이터 목록 */
 	private List<NewsDTO> items;
+	
+	public NewsListDTO() {
+		this.items = new ArrayList<NewsDTO>();
+	}
 
     /**
      * 문자열로 제공된 생성일(lastBuildDate)을 LocalDateTime으로 변환하여 저장합니다.
@@ -39,4 +46,9 @@ public class NewsListDTO {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEE, dd MMM yyyy HH:mm:ss Z", java.util.Locale.ENGLISH);
         this.lastBuildDate = LocalDateTime.parse(lastBuildDate, formatter);
     }
+
+	public void setLastBuildDate(LocalDateTime lastBuildDate) {
+		this.lastBuildDate = lastBuildDate;
+	}
+    
 }

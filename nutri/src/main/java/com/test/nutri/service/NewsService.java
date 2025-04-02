@@ -1,13 +1,16 @@
 package com.test.nutri.service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import com.test.nutri.api.NewsAPI;
+import com.test.nutri.entity.News;
 import com.test.nutri.model.NewsDTO;
 import com.test.nutri.model.NewsListDTO;
+import com.test.nutri.repository.NewsJDBCRepository;
 import com.test.nutri.repository.NewsQueryDSLRepository;
 import com.test.nutri.repository.NewsRepository;
 
@@ -38,7 +41,7 @@ public class NewsService {
      * DB에 뉴스를 저장하거나 조회할 때 사용됩니다. 
      * 뉴스 정보를 저장, 삭제, 수정하는 기본적인 CRUD 작업을 처리하는 역할을 합니다.
      */
-	private final NewsRepository newsRepository;
+	private final NewsRepository repository;
 	
 	/**
      * 뉴스 쿼리 DSL 저장소.
@@ -46,11 +49,13 @@ public class NewsService {
      * 뉴스 데이터를 조건에 맞게 조회하기 위해 QueryDSL을 사용한 Repository입니다.
      * 이 레포지토리를 통해 복잡한 조건을 만족하는 뉴스 데이터들을 쿼리할 수 있습니다.
      */
-	private final NewsQueryDSLRepository newsQueryDSLRepository;
+	private final NewsQueryDSLRepository queryDSLRepository;
+
+	private final NewsJDBCRepository jdbcRepository;
 	
 	public void updateNews() {
 //		최신 뉴스부터 최대 2024년 11월 뉴스까지 DB에 저장
-		if (newsRepository.count() > 0) {
+		if (repository.count() > 0) {
 			updateLatestNewsBinary();
 		} else {
 			insertAllNews();
@@ -69,7 +74,7 @@ public class NewsService {
      */
 	public List<NewsDTO> getNewsList(Integer offset, Integer limit) {
 
-		return newsQueryDSLRepository.findAllPagenation(offset, limit).stream()
+		return queryDSLRepository.findAllPagenation(offset, limit).stream()
 				.map(news -> NewsDTO.builder().title(news.getTitle()).originallink(news.getOriginalLink())
 						.link(news.getLink()).description(news.getDescription()).pubDate(news.getRegDate()).build())
 				.toList();
@@ -82,40 +87,20 @@ public class NewsService {
      */
 	public void insertAllNews() {
 
-		int start = 1;
-		boolean isFind = false;
-		LocalDateTime baseDate = LocalDateTime.of(2024, 11, 1, 0, 0);
+		LocalDateTime baseDateTime = LocalDateTime.of(2024, 11, 1, 0, 0);
 
-		NewsListDTO list;
-		NewsDTO news;
-
-		while (start > 0) {
-			list = newsAPI.getNewsList(start);
-
-//			API 검색 시작 위치 제한 때문에 조건 추가
-			if (list.getItems().getLast().getPubDate().compareTo(baseDate) <= 0 || start == 9) {
-				for (int i = list.getItems().size() - 1; i >= 0; i--) {
-					
-					news = list.getItems().get(i);
-
-					if (news.getPubDate().compareTo(baseDate) >= 0) {
-						newsRepository.save(news.toEntity());
-					}
-				}
-				start--;
-				isFind = true;
-			} else if (isFind) {
-				for (int i = list.getItems().size() - 1; i >= 0; i--) {
-					
-					news = list.getItems().get(i);
-					newsRepository.save(news.toEntity());
-				}
-				start--;
-			} else {
-				start++;
-			}
-
+		NewsListDTO list = newsAPI.getAllNewsLists();
+		List<News> newsList = new ArrayList<News>();
+		
+		int index = binarySearchByDate(list.getItems(), baseDateTime);
+		
+		for(int i = index; i>=0; i--) {
+			News news = list.getItems().get(i).toEntity();
+			
+			newsList.add(news);
 		}
+		
+		jdbcRepository.saveAll(newsList);
 	}
 
     /**
@@ -124,7 +109,7 @@ public class NewsService {
      * @return 뉴스의 총 개수
      */
 	public int getCount() {
-		return (int) newsRepository.count();
+		return (int) repository.count();
 	}
 
     /**
@@ -147,16 +132,16 @@ public class NewsService {
 				for (int i = list.getItems().size() - 1; i >= 0; i--) {
 
 					news = list.getItems().get(i);
-					newsRepository.save(news.toEntity());
+					repository.save(news.toEntity());
 				}
 				start--;
 			} else if (!isFind
-					&& newsQueryDSLRepository.countByTitleAndLinkAndRegDate(list.getItems().getLast()) == 0) {
+					&& queryDSLRepository.countByTitleAndLinkAndRegDate(list.getItems().getLast()) == 0) {
 				if (start == 9) {
 					for (int i = list.getItems().size() - 1; i >= 0; i--) {
 
 						news = list.getItems().get(i);
-						newsRepository.save(news.toEntity());
+						repository.save(news.toEntity());
 					}
 					start--;
 					isFind = true;
@@ -171,7 +156,7 @@ public class NewsService {
 
 					news = list.getItems().get(i);
 
-					newsRepository.save(news.toEntity());
+					repository.save(news.toEntity());
 				}
 				isFind = true;
 				start--;
@@ -192,7 +177,24 @@ public class NewsService {
 		
 		while(left < right) {
 			mid = (left + right) / 2;
-			if(newsQueryDSLRepository.countByTitleAndLinkAndRegDate(list.get(mid)) == 0) {
+			if(queryDSLRepository.countByTitleAndLinkAndRegDate(list.get(mid)) == 0) {
+				left = mid + 1;
+			} else {
+				right = mid;
+			}
+		}
+		
+		return left;
+	}
+
+	public int binarySearchByDate(List<NewsDTO> list, LocalDateTime baseDateTime) {
+		int left = 0;
+		int right = list.size() - 1;
+		int mid;
+
+		while (left < right) {
+			mid = (left + right) / 2;
+			if (list.get(mid).getPubDate().compareTo(baseDateTime) > 0) {
 				left = mid + 1;
 			} else {
 				right = mid;
@@ -224,11 +226,11 @@ public class NewsService {
 				for (int i = list.getItems().size() - 1; i >= 0; i--) {
 					
 					news = list.getItems().get(i);
-					newsRepository.save(news.toEntity());
+					repository.save(news.toEntity());
 				}
 				start--;
 				return;
-			} else if(!isFind && newsQueryDSLRepository.countByTitleAndLinkAndRegDate(list.getItems().getLast()) == 0) {
+			} else if(!isFind && queryDSLRepository.countByTitleAndLinkAndRegDate(list.getItems().getLast()) == 0) {
 				start++;
 				continue;
 			}
@@ -237,8 +239,8 @@ public class NewsService {
 				
 				news = list.getItems().get(i);
 				
-				if (newsQueryDSLRepository.countByTitleAndLinkAndRegDate(news) == 0) {
-					newsRepository.save(news.toEntity());
+				if (queryDSLRepository.countByTitleAndLinkAndRegDate(news) == 0) {
+					repository.save(news.toEntity());
 				}
 			}
 			isFind = true;
